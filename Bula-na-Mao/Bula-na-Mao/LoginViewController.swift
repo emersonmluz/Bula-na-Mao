@@ -42,12 +42,20 @@ final class LoginViewController: UIViewController {
        return setTextField(placeHolder: "Senha")
     }()
     
+    lazy var loginButton: UIButton = {
+        let button = setButton(text: "Login", textColor: .white, font: "Arial-BoldMT", fontSize: 20)
+        button.backgroundColor = .systemPurple
+        button.layer.cornerRadius = 10
+        button.layer.borderWidth = 0.7
+        return button
+    }()
+    
     lazy var registerLabel: UILabel = {
         return setLabel(text: "Não é inscrito?", textColor: .black, font: "Arial-BoldMT", fontSize: 18)
     }()
     
     lazy var registerButton: UIButton = {
-        return setButton()
+        return setButton(text: "Clique aqui", textColor: .link, font: "Arial-BoldMT", fontSize: 18)
     }()
 
     override func viewDidLoad() {
@@ -59,6 +67,7 @@ final class LoginViewController: UIViewController {
         configComponents()
         setComponents()
         setConstraints()
+        setTouch()
     }
     
     private func configComponents() {
@@ -72,6 +81,7 @@ final class LoginViewController: UIViewController {
         view.addSubview(bulaTitlePartThreeLabel)
         view.addSubview(emailTextField)
         view.addSubview(passwordTextField)
+        view.addSubview(loginButton)
         view.addSubview(registerLabel)
         view.addSubview(registerButton)
     }
@@ -102,11 +112,16 @@ final class LoginViewController: UIViewController {
             passwordTextField.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -70),
             passwordTextField.heightAnchor.constraint(equalToConstant: 50),
             
-            registerLabel.topAnchor.constraint(equalTo: passwordTextField.bottomAnchor, constant: 35),
-            registerLabel.centerXAnchor.constraint(equalTo: view.centerXAnchor, constant: -55),
+            loginButton.topAnchor.constraint(equalTo: passwordTextField.bottomAnchor, constant: 20),
+            loginButton.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 70),
+            loginButton.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -70),
+            loginButton.heightAnchor.constraint(equalToConstant: 50),
             
-            registerButton.topAnchor.constraint(equalTo: passwordTextField.bottomAnchor, constant: 29),
-            registerButton.leadingAnchor.constraint(equalTo: registerLabel.trailingAnchor, constant: 5)
+            registerButton.topAnchor.constraint(equalTo: loginButton.bottomAnchor, constant: 4),
+            registerButton.trailingAnchor.constraint(equalTo: loginButton.trailingAnchor, constant: -2),
+            
+            registerLabel.topAnchor.constraint(equalTo: loginButton.bottomAnchor, constant: 10),
+            registerLabel.trailingAnchor.constraint(equalTo: registerButton.leadingAnchor, constant: -5)
         ])
     }
 
@@ -140,17 +155,24 @@ final class LoginViewController: UIViewController {
         return label
     }
     
-    private func setButton() -> UIButton {
+    private func setButton(text: String, textColor: UIColor, font: String, fontSize: Float) -> UIButton {
         let button = UIButton()
         button.translatesAutoresizingMaskIntoConstraints = false
-        button.setTitle("Clique aqui", for: .normal)
-        button.setTitleColor(.link, for: .normal)
-        button.titleLabel?.font = UIFont(name: "Arial-BoldMT", size: 18)
+        button.setTitle(text, for: .normal)
+        button.setTitleColor(textColor, for: .normal)
+        button.titleLabel?.font = UIFont(name: font, size: CGFloat(fontSize))
         return button
+    }
+    
+    private func setTouch() {
+        let touch = UITapGestureRecognizer(target: view, action: #selector(view.endEditing(_:)))
+        view.addGestureRecognizer(touch)
     }
 
 }
 
 extension LoginViewController: UITextFieldDelegate {
-    
+    func textFieldDidEndEditing(_ textField: UITextField) {
+        resignFirstResponder()
+    }
 }
