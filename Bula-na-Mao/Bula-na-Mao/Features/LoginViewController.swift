@@ -7,7 +7,8 @@
 
 import UIKit
 
-final class LoginViewController: UIViewController {
+class LoginViewController: UIViewController {
+    var navigation: UINavigationController?
     
     lazy var backgroundImage: UIImageView = {
         return setImageView(imageName: "Background")
@@ -47,6 +48,7 @@ final class LoginViewController: UIViewController {
         button.backgroundColor = .systemPurple
         button.layer.cornerRadius = 10
         button.layer.borderWidth = 0.7
+        button.addTarget(self, action: #selector(tapLoginButton(_:)), for: .touchUpInside)
         return button
     }()
     
@@ -55,9 +57,20 @@ final class LoginViewController: UIViewController {
     }()
     
     lazy var registerButton: UIButton = {
-        return setButton(text: "Clique aqui", textColor: .link, font: "Arial-BoldMT", fontSize: 18)
+        let button = setButton(text: "Clique aqui", textColor: .link, font: "Arial-BoldMT", fontSize: 18)
+        button.addTarget(self, action: #selector(tapRegisterButton(_:)), for: .touchUpInside)
+        return button
     }()
-
+    
+    init(navigationController: UINavigationController) {
+        self.navigation = navigationController
+        super.init(nibName: nil, bundle: nil)
+    }
+    
+    required init?(coder: NSCoder) {
+        super.init(coder: coder)
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         setupUI()
@@ -99,8 +112,8 @@ final class LoginViewController: UIViewController {
             bulaTitlePartTwoLabel.centerXAnchor.constraint(equalTo: bulaTitlePartOneLabel.trailingAnchor),
             bulaTitlePartTwoLabel.topAnchor.constraint(equalTo: bulaTitlePartOneLabel.centerYAnchor),
             
-            bulaTitlePartThreeLabel.centerXAnchor.constraint(equalTo: bulaTitlePartTwoLabel.leadingAnchor, constant: -20),
-            bulaTitlePartThreeLabel.topAnchor.constraint(equalTo: bulaTitlePartTwoLabel.centerYAnchor, constant: -5),
+            bulaTitlePartThreeLabel.centerXAnchor.constraint(equalTo: bulaTitlePartTwoLabel.leadingAnchor, constant: -25),
+            bulaTitlePartThreeLabel.topAnchor.constraint(equalTo: bulaTitlePartTwoLabel.centerYAnchor, constant: -15),
             
             emailTextField.topAnchor.constraint(equalTo: bulaTitlePartThreeLabel.bottomAnchor, constant: 70),
             emailTextField.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 70),
@@ -168,7 +181,18 @@ final class LoginViewController: UIViewController {
         let touch = UITapGestureRecognizer(target: view, action: #selector(view.endEditing(_:)))
         view.addGestureRecognizer(touch)
     }
-
+    
+    @objc private func tapRegisterButton(_: UIButton) {
+        goTo(controller: RegisterViewController())
+    }
+    
+    @objc private func tapLoginButton(_: UIButton) {
+        goTo(controller: BulaViewController())
+    }
+    
+    private func goTo(controller: UIViewController) {
+        navigation?.pushViewController(controller, animated: true)
+    }
 }
 
 extension LoginViewController: UITextFieldDelegate {
