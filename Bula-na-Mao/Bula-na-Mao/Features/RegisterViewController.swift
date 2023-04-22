@@ -14,5 +14,9 @@ class RegisterViewController: UIViewController {
         view.backgroundColor = .white
     }
     
+    override func viewWillAppear(_ animated: Bool) {
+        navigationController?.isNavigationBarHidden = false
+    }
+    
 
 }

@@ -71,6 +71,10 @@ class LoginViewController: UIViewController {
         super.init(coder: coder)
     }
     
+    override func viewWillAppear(_ animated: Bool) {
+        navigation?.isNavigationBarHidden = true
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         setupUI()
@@ -80,7 +84,6 @@ class LoginViewController: UIViewController {
         configComponents()
         setComponents()
         setConstraints()
-        setTouch()
     }
     
     private func configComponents() {
@@ -177,11 +180,6 @@ class LoginViewController: UIViewController {
         return button
     }
     
-    private func setTouch() {
-        let touch = UITapGestureRecognizer(target: view, action: #selector(view.endEditing(_:)))
-        view.addGestureRecognizer(touch)
-    }
-    
     @objc private func tapRegisterButton(_: UIButton) {
         goTo(controller: RegisterViewController())
     }
@@ -196,7 +194,7 @@ class LoginViewController: UIViewController {
 }
 
 extension LoginViewController: UITextFieldDelegate {
-    func textFieldDidEndEditing(_ textField: UITextField) {
-        resignFirstResponder()
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        view.endEditing(true)
     }
 }
