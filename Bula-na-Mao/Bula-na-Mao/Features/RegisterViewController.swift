@@ -44,6 +44,18 @@ class RegisterViewController: UIViewController {
         return imageView
     }()
     
+    lazy var loadPhotoButton: UIButton = {
+       let button = UIButton()
+        button.translatesAutoresizingMaskIntoConstraints = false
+        button.setTitle("Carregar Foto", for: .normal)
+        button.setTitleColor(.white, for: .normal)
+        button.titleLabel?.font = UIFont(name: "Arial", size: 16)
+        button.backgroundColor = .lightGray
+        button.layer.cornerRadius = 10
+        button.layer.borderWidth = 0.5
+        return button
+    }()
+    
     var dataStackView: UIStackView = {
         let stackView = UIStackView()
         stackView.translatesAutoresizingMaskIntoConstraints = false
@@ -114,6 +126,7 @@ class RegisterViewController: UIViewController {
         scrollView.addSubview(contentView)
         contentView.addSubview(registerLabel)
         contentView.addSubview(perfilImageView)
+        contentView.addSubview(loadPhotoButton)
         contentView.addSubview(dataStackView)
         dataStackView.addArrangedSubview(userNameLabel)
         dataStackView.addArrangedSubview(userNameTextField)
@@ -149,12 +162,14 @@ class RegisterViewController: UIViewController {
             perfilImageView.trailingAnchor.constraint(equalTo: contentView.centerXAnchor, constant: 60),
             perfilImageView.heightAnchor.constraint(equalToConstant: 120),
             
-            dataStackView.topAnchor.constraint(equalTo: perfilImageView.bottomAnchor, constant: 50),
+            loadPhotoButton.topAnchor.constraint(equalTo: perfilImageView.bottomAnchor, constant: 10),
+            loadPhotoButton.leadingAnchor.constraint(equalTo: contentView.centerXAnchor, constant: -60),
+            loadPhotoButton.trailingAnchor.constraint(equalTo: contentView.centerXAnchor, constant: 60),
+            
+            dataStackView.topAnchor.constraint(equalTo: loadPhotoButton.bottomAnchor, constant: 50),
             dataStackView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 20),
             dataStackView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -20),
             dataStackView.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -20)
-            
-            
         ])
     }
     
