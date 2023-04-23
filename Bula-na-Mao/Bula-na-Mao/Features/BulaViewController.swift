@@ -17,5 +17,4 @@ class BulaViewController: UIViewController {
     override func viewWillAppear(_ animated: Bool) {
         navigationController?.isNavigationBarHidden = false
     }
-
 }

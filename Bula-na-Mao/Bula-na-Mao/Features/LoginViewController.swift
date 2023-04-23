@@ -168,6 +168,7 @@ class LoginViewController: UIViewController {
         label.font = UIFont(name: font, size: CGFloat(fontSize))
         label.text = text
         label.textColor = textColor
+        label.adjustsFontSizeToFitWidth = true
         return label
     }
     
