@@ -121,17 +121,17 @@ class LoginViewController: UIViewController {
             emailTextField.topAnchor.constraint(equalTo: bulaTitlePartThreeLabel.bottomAnchor, constant: 70),
             emailTextField.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 70),
             emailTextField.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -70),
-            emailTextField.heightAnchor.constraint(equalToConstant: 50),
+            emailTextField.heightAnchor.constraint(equalToConstant: 45),
             
             passwordTextField.topAnchor.constraint(equalTo: emailTextField.bottomAnchor, constant: 20),
             passwordTextField.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 70),
             passwordTextField.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -70),
-            passwordTextField.heightAnchor.constraint(equalToConstant: 50),
+            passwordTextField.heightAnchor.constraint(equalToConstant: 45),
             
             loginButton.topAnchor.constraint(equalTo: passwordTextField.bottomAnchor, constant: 20),
             loginButton.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 70),
             loginButton.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -70),
-            loginButton.heightAnchor.constraint(equalToConstant: 50),
+            loginButton.heightAnchor.constraint(equalToConstant: 45),
             
             registerButton.topAnchor.constraint(equalTo: loginButton.bottomAnchor, constant: 4),
             registerButton.trailingAnchor.constraint(equalTo: loginButton.trailingAnchor, constant: -2),
@@ -156,7 +156,7 @@ class LoginViewController: UIViewController {
         textField.layer.cornerRadius = 10
         textField.backgroundColor = .white
         textField.textColor = .black
-        textField.font = UIFont(name: "Arial", size: 20)
+        textField.font = UIFont(name: "Arial", size: 18)
         textField.layer.borderWidth = 0.5
         textField.delegate = self
         return textField

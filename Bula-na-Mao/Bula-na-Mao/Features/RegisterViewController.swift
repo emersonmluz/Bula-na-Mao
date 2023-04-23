@@ -45,7 +45,7 @@ class RegisterViewController: UIViewController {
     }()
     
     lazy var loadPhotoButton: UIButton = {
-       let button = UIButton()
+        let button = UIButton()
         button.translatesAutoresizingMaskIntoConstraints = false
         button.setTitle("Carregar Foto", for: .normal)
         button.setTitleColor(.white, for: .normal)
@@ -56,7 +56,7 @@ class RegisterViewController: UIViewController {
         return button
     }()
     
-    var dataStackView: UIStackView = {
+    let dataStackView: UIStackView = {
         let stackView = UIStackView()
         stackView.translatesAutoresizingMaskIntoConstraints = false
         stackView.axis = .vertical
@@ -64,6 +64,18 @@ class RegisterViewController: UIViewController {
         stackView.alignment = .fill
         stackView.spacing = 10
         return stackView
+    }()
+    
+    lazy var registerButton: UIButton = {
+        let button = UIButton()
+        button.translatesAutoresizingMaskIntoConstraints = false
+        button.setTitle("Registrar", for: .normal)
+        button.setTitleColor(.white, for: .normal)
+        button.titleLabel?.font = UIFont(name: "Arial-BoldMT", size: 20)
+        button.backgroundColor = .systemPurple
+        button.layer.cornerRadius = 10
+        button.layer.borderWidth = 0.7
+        return button
     }()
     
     lazy var userNameLabel: UILabel = {
@@ -138,6 +150,7 @@ class RegisterViewController: UIViewController {
         dataStackView.addArrangedSubview(passwordTextField)
         dataStackView.addArrangedSubview(confirmPasswordLabel)
         dataStackView.addArrangedSubview(confirmPasswordTextField)
+        contentView.addSubview(registerButton)
     }
     
     private func setConstraints() {
@@ -169,7 +182,12 @@ class RegisterViewController: UIViewController {
             dataStackView.topAnchor.constraint(equalTo: loadPhotoButton.bottomAnchor, constant: 50),
             dataStackView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 20),
             dataStackView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -20),
-            dataStackView.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -20)
+            
+            registerButton.topAnchor.constraint(equalTo: dataStackView.bottomAnchor, constant: 50),
+            registerButton.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 70),
+            registerButton.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -70),
+            registerButton.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -20),
+            registerButton.heightAnchor.constraint(equalToConstant: 45)
         ])
     }
     
