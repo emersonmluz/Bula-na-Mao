@@ -19,7 +19,6 @@ class RegisterViewController: UIViewController {
     lazy var contentView: UIView = {
         let content = UIView()
         content.translatesAutoresizingMaskIntoConstraints = false
-        content.backgroundColor = .yellow
         return content
     }()
     
@@ -37,7 +36,22 @@ class RegisterViewController: UIViewController {
     }()
     
     lazy var perfilImageView: UIImageView = {
-       setImageView(imageName: "person")
+        let imageView = UIImageView()
+        imageView.translatesAutoresizingMaskIntoConstraints = false
+        imageView.image = UIImage(systemName: "person.fill")
+        imageView.tintColor = .systemBlue
+        imageView.contentMode = .scaleToFill
+        return imageView
+    }()
+    
+    var dataStackView: UIStackView = {
+        let stackView = UIStackView()
+        stackView.translatesAutoresizingMaskIntoConstraints = false
+        stackView.axis = .vertical
+        stackView.distribution = .fillEqually
+        stackView.alignment = .fill
+        stackView.spacing = 10
+        return stackView
     }()
     
     lazy var userNameLabel: UILabel = {
@@ -60,15 +74,25 @@ class RegisterViewController: UIViewController {
        setLabel(text: "Confirmar Senha")
     }()
     
-    lazy var genericTextField: UITextField = {
+    lazy var userNameTextField: UITextField = {
        setTextField()
     }()
     
-    lazy var userNameTextField = genericTextField
-    lazy var emailTextField = genericTextField
-    lazy var confirmEmailTextField = genericTextField
-    lazy var passwordTextField = genericTextField
-    lazy var confirmPasswordTextField = genericTextField
+    lazy var emailTextField: UITextField = {
+       setTextField()
+    }()
+    
+    lazy var confirmEmailTextField: UITextField = {
+       setTextField()
+    }()
+    
+    lazy var passwordTextField: UITextField = {
+       setTextField()
+    }()
+    
+    lazy var confirmPasswordTextField: UITextField = {
+       setTextField()
+    }()
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -89,6 +113,18 @@ class RegisterViewController: UIViewController {
         view.addSubview(scrollView)
         scrollView.addSubview(contentView)
         contentView.addSubview(registerLabel)
+        contentView.addSubview(perfilImageView)
+        contentView.addSubview(dataStackView)
+        dataStackView.addArrangedSubview(userNameLabel)
+        dataStackView.addArrangedSubview(userNameTextField)
+        dataStackView.addArrangedSubview(emailLabel)
+        dataStackView.addArrangedSubview(emailTextField)
+        dataStackView.addArrangedSubview(confirmEmailLabel)
+        dataStackView.addArrangedSubview(confirmEmailTextField)
+        dataStackView.addArrangedSubview(passwordLabel)
+        dataStackView.addArrangedSubview(passwordTextField)
+        dataStackView.addArrangedSubview(confirmPasswordLabel)
+        dataStackView.addArrangedSubview(confirmPasswordTextField)
     }
     
     private func setConstraints() {
@@ -106,16 +142,20 @@ class RegisterViewController: UIViewController {
             
             registerLabel.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 50),
             registerLabel.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 70),
-            registerLabel.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -70)
+            registerLabel.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -70),
+            
+            perfilImageView.topAnchor.constraint(equalTo: registerLabel.bottomAnchor, constant: 50),
+            perfilImageView.leadingAnchor.constraint(equalTo: contentView.centerXAnchor, constant: -60),
+            perfilImageView.trailingAnchor.constraint(equalTo: contentView.centerXAnchor, constant: 60),
+            perfilImageView.heightAnchor.constraint(equalToConstant: 120),
+            
+            dataStackView.topAnchor.constraint(equalTo: perfilImageView.bottomAnchor, constant: 50),
+            dataStackView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 20),
+            dataStackView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -20),
+            dataStackView.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -20)
+            
+            
         ])
-    }
-    
-    private func setImageView(imageName: String) -> UIImageView {
-        let imageView = UIImageView()
-        imageView.translatesAutoresizingMaskIntoConstraints = false
-        imageView.image = UIImage(named: imageName)
-        imageView.contentMode = .scaleToFill
-        return imageView
     }
     
     private func setTextField() -> UITextField {
@@ -127,6 +167,7 @@ class RegisterViewController: UIViewController {
         textField.font = UIFont(name: "Arial", size: 20)
         textField.layer.borderWidth = 0.5
         textField.delegate = self
+        NSLayoutConstraint.activate([textField.heightAnchor.constraint(equalToConstant: 40)])
         return textField
     }
     
