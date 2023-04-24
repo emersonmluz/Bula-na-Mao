@@ -53,6 +53,7 @@ class RegisterViewController: UIViewController {
         button.backgroundColor = .lightGray
         button.layer.cornerRadius = 10
         button.layer.borderWidth = 0.5
+        button.addTarget(self, action: #selector(loadPhoto(_:)), for: .touchUpInside)
         return button
     }()
     
@@ -117,6 +118,16 @@ class RegisterViewController: UIViewController {
     lazy var confirmPasswordTextField: UITextField = {
        setTextField()
     }()
+    
+    let imagePicker = UIImagePickerController()
+    var imagePickedByUser: UIImage? {
+        get {
+            return perfilImageView.image
+        }
+        set {
+            perfilImageView.image = newValue
+        }
+    }
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -222,11 +233,62 @@ class RegisterViewController: UIViewController {
         button.titleLabel?.font = UIFont(name: font, size: CGFloat(fontSize))
         return button
     }
+    
+    @objc private func loadPhoto(_: UIButton) {
+        let alert = UIAlertController(title: "Carregar Foto", message: "Acesse a camera para tirar uma foto ou selecione da galeria.", preferredStyle: .alert)
+        let actionCamera = UIAlertAction(title: "Camera", style: .default) {_ in
+            self.getImageFromCamera()
+        }
+        let actionLibrary = UIAlertAction(title: "Galeria", style: .default) {_ in
+            self.getImageFromPictureLibrary()
+        }
+        alert.addAction(actionCamera)
+        alert.addAction(actionLibrary)
+        alert.view.backgroundColor = .white
+        present(alert, animated: true)
+    }
 
 }
 
 extension RegisterViewController: UITextFieldDelegate {
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         view.endEditing(true)
+    }
+}
+
+extension RegisterViewController: UIImagePickerControllerDelegate, UINavigationControllerDelegate {
+    func getImageFromPictureLibrary() {
+        imagePicker.delegate = self
+        imagePicker.sourceType = .photoLibrary
+        guard let mediaType = UIImagePickerController.availableMediaTypes(for: .photoLibrary) else {return}
+        imagePicker.mediaTypes = mediaType
+        imagePicker.allowsEditing = true
+        present(imagePicker, animated: true)
+    }
+    
+    private func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String : Any]) {
+        guard let image = info[UIImagePickerController.InfoKey.originalImage.rawValue] as? UIImage else {return}
+        dismiss(animated: true)
+        imagePickedByUser = image
+    }
+
+    func imagePickerControllerDidCancel(_ picker: UIImagePickerController) {
+        dismiss(animated: true)
+    }
+    
+    func getImageFromCamera() {
+        if UIImagePickerController.isSourceTypeAvailable(.camera) {
+            imagePicker.delegate = self
+            imagePicker.sourceType = .camera
+            guard let midiaType = UIImagePickerController.availableMediaTypes(for: .camera) else {return}
+            imagePicker.mediaTypes = midiaType
+            imagePicker.allowsEditing = false
+            present(imagePicker, animated: true)
+        } else {
+            let alert = UIAlertController(title: "Acesso negado!", message: "Você não possui acesso a camera.", preferredStyle: .alert)
+            let action = UIAlertAction(title: "OK", style: .default)
+            alert.addAction(action)
+            present(alert, animated: true)
+        }
     }
 }

@@ -58,7 +58,6 @@
 				2CC3305CAE0B01F22AD9C810 /* Pods-Bula-na-Mao.debug.xcconfig */,
 				755F2FAF8B07C170512FA102 /* Pods-Bula-na-Mao.release.xcconfig */,
 			);
-			name = Pods;
 			path = Pods;
 			sourceTree = "<group>";
 		};
