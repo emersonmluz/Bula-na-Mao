@@ -117,11 +117,17 @@ class RegisterViewController: UIViewController {
     }()
     
     lazy var passwordTextField: UITextField = {
-       setTextField()
+        let textField = setTextField()
+        textField.isSecureTextEntry = true
+        textField.textContentType = .oneTimeCode
+        return textField
     }()
     
     lazy var confirmPasswordTextField: UITextField = {
-       setTextField()
+        let textField = setTextField()
+        textField.isSecureTextEntry = false
+        textField.textContentType = .oneTimeCode
+        return textField
     }()
     
     let imagePicker = UIImagePickerController()
@@ -255,9 +261,10 @@ class RegisterViewController: UIViewController {
 
     @objc private func saveUser(_: UIButton) {
         ref = dataBase.collection("users").addDocument(data: [
-            "name": userNameTextField.text ?? "Não informado",
-            "email": emailTextField.text ?? "Não informado",
-            "password": passwordTextField.text ?? "Não informado"
+            "name": userNameTextField.text ?? "",
+            "email": emailTextField.text ?? "",
+            "password": passwordTextField.text ?? "",
+            "photo": perfilImageView.image?.jpegData(compressionQuality: 1)?.base64EncodedString() ?? ""
         ]) { error in
             if let error = error {
                 let alert = UIAlertController(title: "Error", message: "\(error)", preferredStyle: .alert)
