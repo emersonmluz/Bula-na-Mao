@@ -15,6 +15,7 @@
 		EEEB1B5629F0611000BBC268 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = EEEB1B5429F0611000BBC268 /* LaunchScreen.storyboard */; };
 		EEEB1B6029F1C5B400BBC268 /* RegisterViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EEEB1B5F29F1C5B400BBC268 /* RegisterViewController.swift */; };
 		EEEB1B6229F1C8E200BBC268 /* BulaViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EEEB1B6129F1C8E200BBC268 /* BulaViewController.swift */; };
+		EEEB1B6429F839D000BBC268 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = EEEB1B6329F839CF00BBC268 /* GoogleService-Info.plist */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -30,6 +31,7 @@
 		EEEB1B5729F0611000BBC268 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		EEEB1B5F29F1C5B400BBC268 /* RegisterViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegisterViewController.swift; sourceTree = "<group>"; };
 		EEEB1B6129F1C8E200BBC268 /* BulaViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BulaViewController.swift; sourceTree = "<group>"; };
+		EEEB1B6329F839CF00BBC268 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -87,6 +89,7 @@
 				EEEB1B4929F0610E00BBC268 /* AppDelegate.swift */,
 				EEEB1B4B29F0610E00BBC268 /* SceneDelegate.swift */,
 				EEEB1B5229F0611000BBC268 /* Assets.xcassets */,
+				EEEB1B6329F839CF00BBC268 /* GoogleService-Info.plist */,
 				EEEB1B5429F0611000BBC268 /* LaunchScreen.storyboard */,
 				EEEB1B5729F0611000BBC268 /* Info.plist */,
 			);
@@ -156,6 +159,8 @@
 				Base,
 			);
 			mainGroup = EEEB1B3D29F0610E00BBC268;
+			packageReferences = (
+			);
 			productRefGroup = EEEB1B4729F0610E00BBC268 /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
@@ -172,6 +177,7 @@
 			files = (
 				EEEB1B5629F0611000BBC268 /* LaunchScreen.storyboard in Resources */,
 				EEEB1B5329F0611000BBC268 /* Assets.xcassets in Resources */,
+				EEEB1B6429F839D000BBC268 /* GoogleService-Info.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -296,7 +302,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
 				ONLY_ACTIVE_ARCH = YES;
@@ -350,7 +356,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				MTL_FAST_MATH = YES;
 				SDKROOT = iphoneos;

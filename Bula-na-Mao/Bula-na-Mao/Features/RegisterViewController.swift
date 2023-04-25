@@ -6,8 +6,12 @@
 //
 
 import UIKit
+import FirebaseFirestore
 
 class RegisterViewController: UIViewController {
+    
+    let dataBase = Firestore.firestore()
+    var ref: DocumentReference?
     
     let scrollView: UIScrollView = {
         let scroll = UIScrollView()
@@ -76,6 +80,7 @@ class RegisterViewController: UIViewController {
         button.backgroundColor = .systemPurple
         button.layer.cornerRadius = 10
         button.layer.borderWidth = 0.7
+        button.addTarget(self, action: #selector(saveUser(_:)), for: .touchUpInside)
         return button
     }()
     
@@ -248,6 +253,27 @@ class RegisterViewController: UIViewController {
         present(alert, animated: true)
     }
 
+    @objc private func saveUser(_: UIButton) {
+        ref = dataBase.collection("users").addDocument(data: [
+            "name": userNameTextField.text ?? "Não informado",
+            "email": emailTextField.text ?? "Não informado",
+            "password": passwordTextField.text ?? "Não informado"
+        ]) { error in
+            if let error = error {
+                let alert = UIAlertController(title: "Error", message: "\(error)", preferredStyle: .alert)
+                let action = UIAlertAction(title: "Retornar", style: .default)
+                alert.addAction(action)
+                alert.view.backgroundColor = .white
+                self.present(alert, animated: true)
+            } else {
+                let alert = UIAlertController(title: "Sucesso", message: "Registro realizado com sucesso.", preferredStyle: .alert)
+                let action = UIAlertAction(title: "Retornar", style: .default)
+                alert.addAction(action)
+                alert.view.backgroundColor = .white
+                self.present(alert, animated: true)
+            }
+        }
+    }
 }
 
 extension RegisterViewController: UITextFieldDelegate {
