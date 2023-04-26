@@ -7,6 +7,7 @@
 
 import Foundation
 import FirebaseFirestore
+import FirebaseAuth
 
 class FireBaseManager {
     private let dataBase = Firestore.firestore()
@@ -14,18 +15,23 @@ class FireBaseManager {
     static var shared = FireBaseManager()
     
     func saveUserData(name: String, email: String, password: String, photo: String, completion: @escaping((_ titleMessage: String, _ message: String, _ actionTitle: String) -> Void)) {
-        ref = dataBase.collection("users").addDocument(data: [
-            "name": name,
-            "email": email.lowercased(),
-            "password": password.lowercased(),
-            "photo": photo
-        ]) { error in
-            DispatchQueue.main.async {
+
+        Auth.auth().createUser(withEmail: email, password: password) { [self] authResult, error in
+            guard error == nil else {
+                completion("Falha", "Esse e-mail já está em uso.", "Entendi")
+                return}
+            ref = dataBase.collection("users").addDocument(data: [
+                "name": name,
+                "email": email.lowercased(),
+                "password": password.lowercased(),
+                "photo": photo
+            ]) { error in
                 guard error == nil else {
                     completion("Ops!", "Parece que algo deu errado, tente novamente mais tarde.", "Retornar")
                     return}
                 completion("Sucesso", "Registro realizado com sucesso.", "Retornar")
             }
         }
+        
     }
 }

@@ -125,6 +125,22 @@ class RegisterViewController: UIViewController {
         return textField
     }()
     
+    let loadingView: UIView = {
+        let view = UIView()
+        view.translatesAutoresizingMaskIntoConstraints = false
+        view.backgroundColor = .black
+        view.layer.opacity = 0.5
+        view.isHidden = true
+        return view
+    }()
+    
+    let activityLoading: UIActivityIndicatorView = {
+        let activityIndicator = UIActivityIndicatorView()
+        activityIndicator.translatesAutoresizingMaskIntoConstraints = false
+        activityIndicator.style = .large
+        return activityIndicator
+    }()
+    
     let imagePicker = UIImagePickerController()
 
     override func viewDidLoad() {
@@ -134,6 +150,10 @@ class RegisterViewController: UIViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         navigationController?.isNavigationBarHidden = false
+    }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        cleanFields()
     }
     
     private func setupUI() {
@@ -160,6 +180,8 @@ class RegisterViewController: UIViewController {
         dataStackView.addArrangedSubview(confirmPasswordLabel)
         dataStackView.addArrangedSubview(confirmPasswordTextField)
         contentView.addSubview(registerButton)
+        view.addSubview(loadingView)
+        loadingView.addSubview(activityLoading)
     }
     
     private func setConstraints() {
@@ -196,7 +218,15 @@ class RegisterViewController: UIViewController {
             registerButton.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 70),
             registerButton.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -70),
             registerButton.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -20),
-            registerButton.heightAnchor.constraint(equalToConstant: 45)
+            registerButton.heightAnchor.constraint(equalToConstant: 45),
+            
+            loadingView.topAnchor.constraint(equalTo: view.topAnchor),
+            loadingView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
+            loadingView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
+            loadingView.bottomAnchor.constraint(equalTo: view.bottomAnchor),
+            
+            activityLoading.centerYAnchor.constraint(equalTo: loadingView.centerYAnchor),
+            activityLoading.centerXAnchor.constraint(equalTo: loadingView.centerXAnchor)
         ])
     }
     
@@ -254,14 +284,22 @@ class RegisterViewController: UIViewController {
         let password = passwordTextField.text ?? ""
         let photo = perfilImageView.image?.jpegData(compressionQuality: 1)?.base64EncodedString() ?? ""
         
+        loadingView.isHidden = false
+        activityLoading.startAnimating()
+        
         FireBaseManager.shared.saveUserData(name: name, email: email, password: password, photo: photo) { title, message, actionTitle in
-            self.cleanFields()
             let alert = UIAlertController(title: title, message: message, preferredStyle: .alert)
             let action = UIAlertAction(title: actionTitle, style: .default) {_ in
-                self.navigationController?.popToRootViewController(animated: true)
+                if title == "Sucesso" {
+                    self.navigationController?.popToRootViewController(animated: true)
+                }
             }
             alert.addAction(action)
             alert.view.backgroundColor = .white
+            
+            self.loadingView.isHidden = true
+            self.activityLoading.stopAnimating()
+            
             self.present(alert, animated: true)
         }
     }

@@ -14,7 +14,7 @@
 		EEEB1B5329F0611000BBC268 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = EEEB1B5229F0611000BBC268 /* Assets.xcassets */; };
 		EEEB1B5629F0611000BBC268 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = EEEB1B5429F0611000BBC268 /* LaunchScreen.storyboard */; };
 		EEEB1B6029F1C5B400BBC268 /* RegisterViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EEEB1B5F29F1C5B400BBC268 /* RegisterViewController.swift */; };
-		EEEB1B6229F1C8E200BBC268 /* LeadingPageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EEEB1B6129F1C8E200BBC268 /* LeadingPageViewController.swift */; };
+		EEEB1B6229F1C8E200BBC268 /* MainPageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EEEB1B6129F1C8E200BBC268 /* MainPageViewController.swift */; };
 		EEEB1B6429F839D000BBC268 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = EEEB1B6329F839CF00BBC268 /* GoogleService-Info.plist */; };
 		EEEB1B6A29F8B8BB00BBC268 /* FireBaseManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = EEEB1B6929F8B8BB00BBC268 /* FireBaseManager.swift */; };
 		EEEB1B6C29F9604800BBC268 /* Validations.swift in Sources */ = {isa = PBXBuildFile; fileRef = EEEB1B6B29F9604800BBC268 /* Validations.swift */; };
@@ -33,7 +33,7 @@
 		EEEB1B5529F0611000BBC268 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		EEEB1B5729F0611000BBC268 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		EEEB1B5F29F1C5B400BBC268 /* RegisterViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegisterViewController.swift; sourceTree = "<group>"; };
-		EEEB1B6129F1C8E200BBC268 /* LeadingPageViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LeadingPageViewController.swift; sourceTree = "<group>"; };
+		EEEB1B6129F1C8E200BBC268 /* MainPageViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainPageViewController.swift; sourceTree = "<group>"; };
 		EEEB1B6329F839CF00BBC268 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		EEEB1B6929F8B8BB00BBC268 /* FireBaseManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FireBaseManager.swift; sourceTree = "<group>"; };
 		EEEB1B6B29F9604800BBC268 /* Validations.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Validations.swift; sourceTree = "<group>"; };
@@ -107,7 +107,7 @@
 			children = (
 				EEEB1B4D29F0610E00BBC268 /* LoginViewController.swift */,
 				EEEB1B5F29F1C5B400BBC268 /* RegisterViewController.swift */,
-				EEEB1B6129F1C8E200BBC268 /* LeadingPageViewController.swift */,
+				EEEB1B6129F1C8E200BBC268 /* MainPageViewController.swift */,
 			);
 			path = Features;
 			sourceTree = "<group>";
@@ -252,7 +252,7 @@
 				EEEB1B4C29F0610E00BBC268 /* SceneDelegate.swift in Sources */,
 				EEEB1B6029F1C5B400BBC268 /* RegisterViewController.swift in Sources */,
 				EEEB1B6F29F960C400BBC268 /* StringExtension.swift in Sources */,
-				EEEB1B6229F1C8E200BBC268 /* LeadingPageViewController.swift in Sources */,
+				EEEB1B6229F1C8E200BBC268 /* MainPageViewController.swift in Sources */,
 				EEEB1B6A29F8B8BB00BBC268 /* FireBaseManager.swift in Sources */,
 				EEEB1B6C29F9604800BBC268 /* Validations.swift in Sources */,
 			);

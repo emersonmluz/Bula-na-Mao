@@ -189,7 +189,7 @@ class LoginViewController: UIViewController {
     }
     
     @objc private func tapLoginButton(_: UIButton) {
-        goTo(controller: LeadingPageViewController())
+        goTo(controller: MainPageViewController())
     }
     
     private func goTo(controller: UIViewController) {
