@@ -249,14 +249,30 @@ class RegisterViewController: UIViewController {
     @objc private func saveUser(_: UIButton) {
         guard dataValidation() else {return}
         
-        var name = userNameTextField.text ?? ""
-        var email = emailTextField.text ?? ""
-        var password = passwordTextField.text ?? ""
-        var photo = perfilImageView.image?.jpegData(compressionQuality: 1)?.base64EncodedString() ?? ""
+        let name = userNameTextField.text ?? ""
+        let email = emailTextField.text ?? ""
+        let password = passwordTextField.text ?? ""
+        let photo = perfilImageView.image?.jpegData(compressionQuality: 1)?.base64EncodedString() ?? ""
         
         FireBaseManager.shared.saveUserData(name: name, email: email, password: password, photo: photo) { title, message, actionTitle in
-            self.showAlert(title: title, message: message, actionTitle: actionTitle)
+            self.cleanFields()
+            let alert = UIAlertController(title: title, message: message, preferredStyle: .alert)
+            let action = UIAlertAction(title: actionTitle, style: .default) {_ in
+                self.navigationController?.popToRootViewController(animated: true)
+            }
+            alert.addAction(action)
+            alert.view.backgroundColor = .white
+            self.present(alert, animated: true)
         }
+    }
+    
+    private func cleanFields() {
+        userNameTextField.text = ""
+        emailTextField.text = ""
+        confirmEmailTextField.text = ""
+        passwordTextField.text = ""
+        confirmPasswordTextField.text = ""
+        perfilImageView.image = UIImage(systemName: "person.fill")
     }
     
     private func showAlert(title: String, message: String, actionTitle: String) {

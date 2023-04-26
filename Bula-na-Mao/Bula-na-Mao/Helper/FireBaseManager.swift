@@ -20,10 +20,12 @@ class FireBaseManager {
             "password": password.lowercased(),
             "photo": photo
         ]) { error in
-            guard error == nil else {
-                completion("Ops!", "Parece que algo deu errado, tente novamente mais tarde.", "Retornar")
-                return}
-            completion("Sucesso", "Registro realizado com sucesso.", "Retornar")
+            DispatchQueue.main.async {
+                guard error == nil else {
+                    completion("Ops!", "Parece que algo deu errado, tente novamente mais tarde.", "Retornar")
+                    return}
+                completion("Sucesso", "Registro realizado com sucesso.", "Retornar")
+            }
         }
     }
 }
