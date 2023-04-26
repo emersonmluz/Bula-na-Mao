@@ -7,7 +7,7 @@
 
 import UIKit
 
-class BulaViewController: UIViewController {
+class LeadingPageViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()

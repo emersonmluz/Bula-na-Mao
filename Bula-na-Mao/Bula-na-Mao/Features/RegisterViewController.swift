@@ -6,13 +6,8 @@
 //
 
 import UIKit
-import FirebaseFirestore
 
 class RegisterViewController: UIViewController {
-    
-    let dataBase = Firestore.firestore()
-    var ref: DocumentReference?
-    
     let scrollView: UIScrollView = {
         let scroll = UIScrollView()
         scroll.translatesAutoresizingMaskIntoConstraints = false
@@ -131,14 +126,6 @@ class RegisterViewController: UIViewController {
     }()
     
     let imagePicker = UIImagePickerController()
-    var imagePickedByUser: UIImage? {
-        get {
-            return perfilImageView.image
-        }
-        set {
-            perfilImageView.image = newValue
-        }
-    }
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -260,26 +247,27 @@ class RegisterViewController: UIViewController {
     }
 
     @objc private func saveUser(_: UIButton) {
-        ref = dataBase.collection("users").addDocument(data: [
+        let userData: [String:String] = [
             "name": userNameTextField.text ?? "",
             "email": emailTextField.text ?? "",
             "password": passwordTextField.text ?? "",
             "photo": perfilImageView.image?.jpegData(compressionQuality: 1)?.base64EncodedString() ?? ""
-        ]) { error in
-            if let error = error {
-                let alert = UIAlertController(title: "Error", message: "\(error)", preferredStyle: .alert)
-                let action = UIAlertAction(title: "Retornar", style: .default)
-                alert.addAction(action)
-                alert.view.backgroundColor = .white
-                self.present(alert, animated: true)
+        ]
+        FireBaseManager.shared.saveUserData(data: userData) { error in
+            if error != nil {
+                self.showAlert(title: "Ops!", message: "Parece que algo deu errado, tente novamente mais tarde.", actionTitle: "Retornar")
             } else {
-                let alert = UIAlertController(title: "Sucesso", message: "Registro realizado com sucesso.", preferredStyle: .alert)
-                let action = UIAlertAction(title: "Retornar", style: .default)
-                alert.addAction(action)
-                alert.view.backgroundColor = .white
-                self.present(alert, animated: true)
+                self.showAlert(title: "Sucesso", message: "Registro realizado com sucesso.", actionTitle: "Retornar")
             }
         }
+    }
+    
+    private func showAlert(title: String, message: String, actionTitle: String) {
+        let alert = UIAlertController(title: title, message: message, preferredStyle: .alert)
+        let action = UIAlertAction(title: actionTitle, style: .default)
+        alert.addAction(action)
+        alert.view.backgroundColor = .white
+        self.present(alert, animated: true)
     }
 }
 
@@ -299,16 +287,6 @@ extension RegisterViewController: UIImagePickerControllerDelegate, UINavigationC
         present(imagePicker, animated: true)
     }
     
-    private func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String : Any]) {
-        guard let image = info[UIImagePickerController.InfoKey.originalImage.rawValue] as? UIImage else {return}
-        dismiss(animated: true)
-        imagePickedByUser = image
-    }
-
-    func imagePickerControllerDidCancel(_ picker: UIImagePickerController) {
-        dismiss(animated: true)
-    }
-    
     func getImageFromCamera() {
         if UIImagePickerController.isSourceTypeAvailable(.camera) {
             imagePicker.delegate = self
@@ -318,10 +296,17 @@ extension RegisterViewController: UIImagePickerControllerDelegate, UINavigationC
             imagePicker.allowsEditing = false
             present(imagePicker, animated: true)
         } else {
-            let alert = UIAlertController(title: "Acesso negado!", message: "Você não possui acesso a camera.", preferredStyle: .alert)
-            let action = UIAlertAction(title: "OK", style: .default)
-            alert.addAction(action)
-            present(alert, animated: true)
+            showAlert(title: "Acesso negado!", message: "Você não possui acesso a camera.", actionTitle: "OK")
         }
+    }
+    
+    private func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String : Any]) {
+        guard let image = info[UIImagePickerController.InfoKey.originalImage.rawValue] as? UIImage else {return}
+        dismiss(animated: true)
+        perfilImageView.image = image
+    }
+
+    func imagePickerControllerDidCancel(_ picker: UIImagePickerController) {
+        dismiss(animated: true)
     }
 }

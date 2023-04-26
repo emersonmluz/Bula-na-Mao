@@ -40,7 +40,10 @@ class LoginViewController: UIViewController {
     }()
     
     lazy var passwordTextField: UITextField = {
-       return setTextField(placeHolder: "Senha")
+        let textField = setTextField(placeHolder: "Senha")
+        textField.isSecureTextEntry = false
+        textField.textContentType = .oneTimeCode
+        return textField
     }()
     
     lazy var loginButton: UIButton = {
@@ -186,7 +189,7 @@ class LoginViewController: UIViewController {
     }
     
     @objc private func tapLoginButton(_: UIButton) {
-        goTo(controller: BulaViewController())
+        goTo(controller: LeadingPageViewController())
     }
     
     private func goTo(controller: UIViewController) {
