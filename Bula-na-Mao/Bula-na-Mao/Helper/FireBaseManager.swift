@@ -13,14 +13,17 @@ class FireBaseManager {
     private var ref: DocumentReference?
     static var shared = FireBaseManager()
     
-    func saveUserData(data: [String: String], completion: @escaping((_: NSError?) -> Void)) {
+    func saveUserData(name: String, email: String, password: String, photo: String, completion: @escaping((_ titleMessage: String, _ message: String, _ actionTitle: String) -> Void)) {
         ref = dataBase.collection("users").addDocument(data: [
-            "name": data["name"] ?? "name",
-            "email": data["email"] ?? "email",
-            "password": data["password"] ?? "password",
-            "photo": data["photo"] ?? "photo"
+            "name": name,
+            "email": email.lowercased(),
+            "password": password.lowercased(),
+            "photo": photo
         ]) { error in
-            completion(error as NSError?)
+            guard error == nil else {
+                completion("Ops!", "Parece que algo deu errado, tente novamente mais tarde.", "Retornar")
+                return}
+            completion("Sucesso", "Registro realizado com sucesso.", "Retornar")
         }
     }
 }

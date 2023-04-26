@@ -17,6 +17,8 @@
 		EEEB1B6229F1C8E200BBC268 /* LeadingPageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EEEB1B6129F1C8E200BBC268 /* LeadingPageViewController.swift */; };
 		EEEB1B6429F839D000BBC268 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = EEEB1B6329F839CF00BBC268 /* GoogleService-Info.plist */; };
 		EEEB1B6A29F8B8BB00BBC268 /* FireBaseManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = EEEB1B6929F8B8BB00BBC268 /* FireBaseManager.swift */; };
+		EEEB1B6C29F9604800BBC268 /* Validations.swift in Sources */ = {isa = PBXBuildFile; fileRef = EEEB1B6B29F9604800BBC268 /* Validations.swift */; };
+		EEEB1B6F29F960C400BBC268 /* StringExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = EEEB1B6E29F960C400BBC268 /* StringExtension.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -34,6 +36,8 @@
 		EEEB1B6129F1C8E200BBC268 /* LeadingPageViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LeadingPageViewController.swift; sourceTree = "<group>"; };
 		EEEB1B6329F839CF00BBC268 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		EEEB1B6929F8B8BB00BBC268 /* FireBaseManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FireBaseManager.swift; sourceTree = "<group>"; };
+		EEEB1B6B29F9604800BBC268 /* Validations.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Validations.swift; sourceTree = "<group>"; };
+		EEEB1B6E29F960C400BBC268 /* StringExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StringExtension.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -111,9 +115,19 @@
 		EEEB1B5E29F1C58400BBC268 /* Helper */ = {
 			isa = PBXGroup;
 			children = (
+				EEEB1B6D29F9609500BBC268 /* Extensions */,
 				EEEB1B6929F8B8BB00BBC268 /* FireBaseManager.swift */,
+				EEEB1B6B29F9604800BBC268 /* Validations.swift */,
 			);
 			path = Helper;
+			sourceTree = "<group>";
+		};
+		EEEB1B6D29F9609500BBC268 /* Extensions */ = {
+			isa = PBXGroup;
+			children = (
+				EEEB1B6E29F960C400BBC268 /* StringExtension.swift */,
+			);
+			path = Extensions;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -237,8 +251,10 @@
 				EEEB1B4A29F0610E00BBC268 /* AppDelegate.swift in Sources */,
 				EEEB1B4C29F0610E00BBC268 /* SceneDelegate.swift in Sources */,
 				EEEB1B6029F1C5B400BBC268 /* RegisterViewController.swift in Sources */,
+				EEEB1B6F29F960C400BBC268 /* StringExtension.swift in Sources */,
 				EEEB1B6229F1C8E200BBC268 /* LeadingPageViewController.swift in Sources */,
 				EEEB1B6A29F8B8BB00BBC268 /* FireBaseManager.swift in Sources */,
+				EEEB1B6C29F9604800BBC268 /* Validations.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

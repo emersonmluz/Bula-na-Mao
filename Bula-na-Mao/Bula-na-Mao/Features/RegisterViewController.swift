@@ -120,7 +120,7 @@ class RegisterViewController: UIViewController {
     
     lazy var confirmPasswordTextField: UITextField = {
         let textField = setTextField()
-        textField.isSecureTextEntry = false
+        textField.isSecureTextEntry = true
         textField.textContentType = .oneTimeCode
         return textField
     }()
@@ -247,18 +247,15 @@ class RegisterViewController: UIViewController {
     }
 
     @objc private func saveUser(_: UIButton) {
-        let userData: [String:String] = [
-            "name": userNameTextField.text ?? "",
-            "email": emailTextField.text ?? "",
-            "password": passwordTextField.text ?? "",
-            "photo": perfilImageView.image?.jpegData(compressionQuality: 1)?.base64EncodedString() ?? ""
-        ]
-        FireBaseManager.shared.saveUserData(data: userData) { error in
-            if error != nil {
-                self.showAlert(title: "Ops!", message: "Parece que algo deu errado, tente novamente mais tarde.", actionTitle: "Retornar")
-            } else {
-                self.showAlert(title: "Sucesso", message: "Registro realizado com sucesso.", actionTitle: "Retornar")
-            }
+        guard dataValidation() else {return}
+        
+        var name = userNameTextField.text ?? ""
+        var email = emailTextField.text ?? ""
+        var password = passwordTextField.text ?? ""
+        var photo = perfilImageView.image?.jpegData(compressionQuality: 1)?.base64EncodedString() ?? ""
+        
+        FireBaseManager.shared.saveUserData(name: name, email: email, password: password, photo: photo) { title, message, actionTitle in
+            self.showAlert(title: title, message: message, actionTitle: actionTitle)
         }
     }
     
@@ -268,6 +265,28 @@ class RegisterViewController: UIViewController {
         alert.addAction(action)
         alert.view.backgroundColor = .white
         self.present(alert, animated: true)
+    }
+    
+    private func dataValidation() -> Bool {
+        guard Validations.shared.validateFullName(fullName: userNameTextField.text ?? ""),
+              Validations.shared.validateEmail(email: emailTextField.text ?? ""),
+              Validations.shared.validatePassword(password: passwordTextField.text ?? "")
+        else {
+            showAlert(title: "Atenção", message: "Verifique seus dados:\n\n" +
+                            "* O nome deve conter pelo menos um nome e um sobrenome;\n\n" +
+                            "* O email não deve conter espaços e deve ser um email válido;\n\n" +
+                            "* A senha deve conter 6 dígitos, pelo menos 1 caracter especial e 1 número.", actionTitle: "Entendi")
+            return false}
+        
+        if emailTextField.text?.lowercased() != confirmEmailTextField.text?.lowercased() {
+            showAlert(title: "Atenção", message: "Confirmação de E-mail não corresponde ao E-mail digitado", actionTitle: "Entendi")
+            return false
+        } else if passwordTextField.text?.lowercased() != confirmPasswordTextField.text?.lowercased() {
+            showAlert(title: "Atenção", message: "Confirmação de senha não corresponde a senha digitada.", actionTitle: "Entendi")
+            return false
+        } else {
+            return true
+        }
     }
 }
 
