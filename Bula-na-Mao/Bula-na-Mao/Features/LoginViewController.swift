@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import FirebaseAuth
 
 class LoginViewController: UIViewController {
     var navigation: UINavigationController?
@@ -41,7 +42,7 @@ class LoginViewController: UIViewController {
     
     lazy var passwordTextField: UITextField = {
         let textField = setTextField(placeHolder: "Senha")
-        textField.isSecureTextEntry = false
+        textField.isSecureTextEntry = true
         textField.textContentType = .oneTimeCode
         return textField
     }()
@@ -189,7 +190,17 @@ class LoginViewController: UIViewController {
     }
     
     @objc private func tapLoginButton(_: UIButton) {
-        goTo(controller: MainPageViewController())
+        FireBaseManager.shared.authLogin(email: emailTextField.text?.lowercased() ?? "", senha: passwordTextField.text?.lowercased() ?? "") { [weak self] title, message, actionTitle in
+            guard title == "", message == "", actionTitle == "" else {
+                let alert = UIAlertController(title: title, message: message, preferredStyle: .alert)
+                let action = UIAlertAction(title: actionTitle, style: .default)
+                alert.addAction(action)
+                alert.view.backgroundColor = .white
+                self?.present(alert, animated: true)
+                return
+            }
+            self?.goTo(controller: MainPageViewController())
+        }
     }
     
     private func goTo(controller: UIViewController) {

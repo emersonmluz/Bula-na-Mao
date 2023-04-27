@@ -326,8 +326,7 @@ class RegisterViewController: UIViewController {
               Validations.shared.validateEmail(email: emailTextField.text ?? ""),
               Validations.shared.validatePassword(password: passwordTextField.text ?? "")
         else {
-            showAlert(title: "Atenção", message: "Verifique seus dados:\n\n" +
-                            "* O nome deve conter pelo menos um nome e um sobrenome;\n\n" +
+            showAlert(title: "Atenção", message: "* O nome deve conter pelo menos um sobrenome;\n\n" +
                             "* O email não deve conter espaços e deve ser um email válido;\n\n" +
                             "* A senha deve conter 6 dígitos, pelo menos 1 caracter especial e 1 número.", actionTitle: "Entendi")
             return false}
