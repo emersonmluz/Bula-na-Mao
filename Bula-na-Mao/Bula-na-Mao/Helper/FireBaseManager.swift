@@ -9,10 +9,10 @@ import Foundation
 import FirebaseFirestore
 import FirebaseAuth
 
-class FireBaseManager {
+class FirebaseManager {
     private let dataBase = Firestore.firestore()
     private var ref: DocumentReference?
-    static var shared = FireBaseManager()
+    static var shared = FirebaseManager()
     
     func authLogin(email: String, senha: String, completion: @escaping((_ title: String, _ message: String, _ actionTitle: String) -> Void)) {
         Auth.auth().signIn(withEmail: email, password: senha) { authResult, error in

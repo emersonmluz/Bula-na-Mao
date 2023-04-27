@@ -6,7 +6,6 @@
 //
 
 import UIKit
-import FirebaseAuth
 
 class LoginViewController: UIViewController {
     var navigation: UINavigationController?
@@ -190,7 +189,7 @@ class LoginViewController: UIViewController {
     }
     
     @objc private func tapLoginButton(_: UIButton) {
-        FireBaseManager.shared.authLogin(email: emailTextField.text?.lowercased() ?? "", senha: passwordTextField.text?.lowercased() ?? "") { [weak self] title, message, actionTitle in
+        FirebaseManager.shared.authLogin(email: emailTextField.text?.lowercased() ?? "", senha: passwordTextField.text?.lowercased() ?? "") { [weak self] title, message, actionTitle in
             guard title == "", message == "", actionTitle == "" else {
                 let alert = UIAlertController(title: title, message: message, preferredStyle: .alert)
                 let action = UIAlertAction(title: actionTitle, style: .default)
