@@ -36,21 +36,33 @@ class MainPageViewController: UIViewController {
         return label
     }()
     
-    lazy var historyButton: CustomButton = {
-        let button = CustomButton()
+    lazy var historyButton: CustomSegmentedControl = {
+        let button = CustomSegmentedControl()
         button.translatesAutoresizingMaskIntoConstraints = false
         button.setTitleButton(title: "Histórico")
         button.button.addTarget(self, action: #selector(historyButtonAction(_:)), for: .touchUpInside)
         return button
     }()
     
-    lazy var favoriteButton: CustomButton = {
-        let button = CustomButton()
+    lazy var favoriteButton: CustomSegmentedControl = {
+        let button = CustomSegmentedControl()
         button.translatesAutoresizingMaskIntoConstraints = false
         button.setTitleButton(title: "Favoritos")
         button.isActive(false)
         button.button.addTarget(self, action: #selector(favoriteButtonAction(_:)), for: .touchUpInside)
         return button
+    }()
+    
+    let searchTextField: UITextField = {
+        let textField = UITextField()
+        textField.translatesAutoresizingMaskIntoConstraints = false
+        textField.backgroundColor = .white
+        textField.placeholder = "Pesquisar"
+        textField.textColor = .darkGray
+        textField.textAlignment = .center
+        textField.font = UIFont(name: "Arial", size: 18)
+        textField.layer.borderWidth = 0.1
+        return textField
     }()
     
     override func viewDidLoad() {
@@ -69,7 +81,7 @@ class MainPageViewController: UIViewController {
     }
     
     private func configComponents() {
-        view.backgroundColor = .white
+        view.backgroundColor = .systemGray6
         perfilImageView.layer.cornerRadius = perfilImageView.bounds.height / 2
     }
     
@@ -79,6 +91,7 @@ class MainPageViewController: UIViewController {
         containerView.addSubview(userNameLabel)
         containerView.addSubview(historyButton)
         containerView.addSubview(favoriteButton)
+        view.addSubview(searchTextField)
     }
     
     private func setConstraint() {
@@ -106,16 +119,21 @@ class MainPageViewController: UIViewController {
             favoriteButton.leadingAnchor.constraint(equalTo: containerView.centerXAnchor),
             favoriteButton.trailingAnchor.constraint(equalTo: containerView.trailingAnchor),
             favoriteButton.bottomAnchor.constraint(equalTo: containerView.bottomAnchor),
-            favoriteButton.heightAnchor.constraint(equalToConstant: 60)
+            favoriteButton.heightAnchor.constraint(equalToConstant: 60),
+            
+            searchTextField.topAnchor.constraint(equalTo: containerView.bottomAnchor),
+            searchTextField.leadingAnchor.constraint(equalTo: view.leadingAnchor),
+            searchTextField.trailingAnchor.constraint(equalTo: view.trailingAnchor),
+            searchTextField.heightAnchor.constraint(equalToConstant: 35)
         ])
     }
     
-    @objc private func historyButtonAction(_: CustomButton) {
+    @objc private func historyButtonAction(_: CustomSegmentedControl) {
         historyButton.isActive(true)
         favoriteButton.isActive(false)
     }
     
-    @objc private func favoriteButtonAction(_: CustomButton) {
+    @objc private func favoriteButtonAction(_: CustomSegmentedControl) {
         favoriteButton.isActive(true)
         historyButton.isActive(false)
     }

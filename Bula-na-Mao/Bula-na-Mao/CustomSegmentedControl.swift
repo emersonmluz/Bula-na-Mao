@@ -7,7 +7,7 @@
 
 import UIKit
 
-class CustomButton: UIView {
+class CustomSegmentedControl: UIView {
     let button: UIButton = {
         let button = UIButton()
         button.translatesAutoresizingMaskIntoConstraints = false
@@ -20,7 +20,7 @@ class CustomButton: UIView {
     private let bottonBarView: UIView = {
         let view = UIView()
         view.translatesAutoresizingMaskIntoConstraints = false
-        view.backgroundColor = .systemGray6
+        view.backgroundColor = .white
         return view
     }()
     
