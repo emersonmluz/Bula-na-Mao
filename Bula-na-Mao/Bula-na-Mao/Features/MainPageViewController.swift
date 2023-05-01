@@ -45,12 +45,15 @@ class MainPageViewController: UIViewController {
     }()
     
     lazy var favoriteButton: CustomSegmentedControl = {
-        let button = CustomSegmentedControl()
-        button.translatesAutoresizingMaskIntoConstraints = false
-        button.setTitleButton(title: "Favoritos")
-        button.isActive(false)
-        button.button.addTarget(self, action: #selector(favoriteButtonAction(_:)), for: .touchUpInside)
-        return button
+        let segmentedControl = CustomSegmentedControl()
+        segmentedControl.translatesAutoresizingMaskIntoConstraints = false
+        segmentedControl.setTitleButton(title: " Favoritos")
+        let image = UIImage(systemName: "star.fill")
+        segmentedControl.button.setImage(image, for: .normal)
+        segmentedControl.button.tintColor = .systemGray4
+        segmentedControl.isActive(false)
+        segmentedControl.button.addTarget(self, action: #selector(favoriteButtonAction(_:)), for: .touchUpInside)
+        return segmentedControl
     }()
     
     let searchTextField: UITextField = {
@@ -131,10 +134,12 @@ class MainPageViewController: UIViewController {
     @objc private func historyButtonAction(_: CustomSegmentedControl) {
         historyButton.isActive(true)
         favoriteButton.isActive(false)
+        favoriteButton.button.tintColor = .systemGray4
     }
     
     @objc private func favoriteButtonAction(_: CustomSegmentedControl) {
         favoriteButton.isActive(true)
+        favoriteButton.button.tintColor = .systemYellow
         historyButton.isActive(false)
     }
 }
