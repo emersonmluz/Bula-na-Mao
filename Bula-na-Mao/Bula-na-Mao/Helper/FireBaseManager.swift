@@ -11,7 +11,7 @@ import FirebaseAuth
 
 class FirebaseManager {
     private let dataBase = Firestore.firestore()
-    private var ref: DocumentReference?
+    private var refDoc: DocumentReference?
     static var shared = FirebaseManager()
     
     func authLogin(email: String, senha: String, completion: @escaping((_ title: String, _ message: String, _ actionTitle: String) -> Void)) {
@@ -29,7 +29,9 @@ class FirebaseManager {
             guard error == nil else {
                 completion("Falha", "Esse e-mail já está em uso ou o sistema pode estar indisponível.", "Entendi")
                 return}
-            ref = dataBase.collection("users").addDocument(data: [
+            refDoc = dataBase.collection("users").document(name.lowercased())
+            guard let ref = refDoc else {return}
+            ref.setData([
                 "name": name,
                 "email": email.lowercased(),
                 "password": password.lowercased(),
