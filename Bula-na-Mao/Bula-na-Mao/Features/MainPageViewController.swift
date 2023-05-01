@@ -68,6 +68,15 @@ class MainPageViewController: UIViewController {
         return textField
     }()
     
+    lazy var medicinesTableView: UITableView = {
+        let tableView = UITableView()
+        tableView.translatesAutoresizingMaskIntoConstraints = false
+        tableView.dataSource = self
+        tableView.delegate = self
+        tableView.register(UITableViewCell.self, forCellReuseIdentifier: MedicinesTableViewCell.medicinesCell)
+        return tableView
+    }()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         setupUI()
@@ -142,4 +151,16 @@ class MainPageViewController: UIViewController {
         favoriteButton.button.tintColor = .systemYellow
         historyButton.isActive(false)
     }
+}
+
+extension MainPageViewController: UITableViewDataSource, UITableViewDelegate {
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return 10
+    }
+    
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let cell = tableView.dequeueReusableCell(withIdentifier: MedicinesTableViewCell.medicinesCell) as! MedicinesTableViewCell
+        return cell
+    }
+    
 }
