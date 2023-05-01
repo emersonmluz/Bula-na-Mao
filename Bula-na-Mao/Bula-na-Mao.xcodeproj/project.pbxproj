@@ -8,7 +8,8 @@
 
 /* Begin PBXBuildFile section */
 		7EC127BF6172445462861AA5 /* Pods_Bula_na_Mao.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 53E4F204EA77681315EE1AE5 /* Pods_Bula_na_Mao.framework */; };
-		EEC4BA5529FC2A9000B8EE64 /* CustomSegmentedControl.swift in Sources */ = {isa = PBXBuildFile; fileRef = EEC4BA5429FC2A9000B8EE64 /* CustomSegmentedControl.swift */; };
+		EEC4BA5529FC2A9000B8EE64 /* MainSegmentedControl.swift in Sources */ = {isa = PBXBuildFile; fileRef = EEC4BA5429FC2A9000B8EE64 /* MainSegmentedControl.swift */; };
+		EEC4BA5929FFEA0600B8EE64 /* MainButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = EEC4BA5829FFEA0600B8EE64 /* MainButton.swift */; };
 		EEEB1B4A29F0610E00BBC268 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = EEEB1B4929F0610E00BBC268 /* AppDelegate.swift */; };
 		EEEB1B4C29F0610E00BBC268 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = EEEB1B4B29F0610E00BBC268 /* SceneDelegate.swift */; };
 		EEEB1B4E29F0610E00BBC268 /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EEEB1B4D29F0610E00BBC268 /* LoginViewController.swift */; };
@@ -26,7 +27,8 @@
 		2CC3305CAE0B01F22AD9C810 /* Pods-Bula-na-Mao.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Bula-na-Mao.debug.xcconfig"; path = "Target Support Files/Pods-Bula-na-Mao/Pods-Bula-na-Mao.debug.xcconfig"; sourceTree = "<group>"; };
 		53E4F204EA77681315EE1AE5 /* Pods_Bula_na_Mao.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Bula_na_Mao.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		755F2FAF8B07C170512FA102 /* Pods-Bula-na-Mao.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Bula-na-Mao.release.xcconfig"; path = "Target Support Files/Pods-Bula-na-Mao/Pods-Bula-na-Mao.release.xcconfig"; sourceTree = "<group>"; };
-		EEC4BA5429FC2A9000B8EE64 /* CustomSegmentedControl.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomSegmentedControl.swift; sourceTree = "<group>"; };
+		EEC4BA5429FC2A9000B8EE64 /* MainSegmentedControl.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainSegmentedControl.swift; sourceTree = "<group>"; };
+		EEC4BA5829FFEA0600B8EE64 /* MainButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainButton.swift; sourceTree = "<group>"; };
 		EEEB1B4629F0610E00BBC268 /* Bula-na-Mao.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Bula-na-Mao.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		EEEB1B4929F0610E00BBC268 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		EEEB1B4B29F0610E00BBC268 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -82,7 +84,8 @@
 		EEC4BA5329FC2A5D00B8EE64 /* Reusables */ = {
 			isa = PBXGroup;
 			children = (
-				EEC4BA5429FC2A9000B8EE64 /* CustomSegmentedControl.swift */,
+				EEC4BA5429FC2A9000B8EE64 /* MainSegmentedControl.swift */,
+				EEC4BA5829FFEA0600B8EE64 /* MainButton.swift */,
 			);
 			name = Reusables;
 			sourceTree = "<group>";
@@ -268,8 +271,9 @@
 			files = (
 				EEEB1B4E29F0610E00BBC268 /* LoginViewController.swift in Sources */,
 				EEEB1B4A29F0610E00BBC268 /* AppDelegate.swift in Sources */,
-				EEC4BA5529FC2A9000B8EE64 /* CustomSegmentedControl.swift in Sources */,
+				EEC4BA5529FC2A9000B8EE64 /* MainSegmentedControl.swift in Sources */,
 				EEEB1B4C29F0610E00BBC268 /* SceneDelegate.swift in Sources */,
+				EEC4BA5929FFEA0600B8EE64 /* MainButton.swift in Sources */,
 				EEEB1B6029F1C5B400BBC268 /* RegisterViewController.swift in Sources */,
 				EEEB1B6F29F960C400BBC268 /* StringExtension.swift in Sources */,
 				EEEB1B6229F1C8E200BBC268 /* MainPageViewController.swift in Sources */,

@@ -7,7 +7,7 @@
 
 import UIKit
 
-class CustomSegmentedControl: UIView {
+class MainSegmentedControl: UIView {
     let button: UIButton = {
         let button = UIButton()
         button.translatesAutoresizingMaskIntoConstraints = false

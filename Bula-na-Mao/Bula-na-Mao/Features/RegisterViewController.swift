@@ -66,15 +66,9 @@ class RegisterViewController: UIViewController {
         return stackView
     }()
     
-    lazy var registerButton: UIButton = {
-        let button = UIButton()
-        button.translatesAutoresizingMaskIntoConstraints = false
-        button.setTitle("Registrar", for: .normal)
-        button.setTitleColor(.white, for: .normal)
-        button.titleLabel?.font = UIFont(name: "Arial-BoldMT", size: 20)
-        button.backgroundColor = .systemPurple
-        button.layer.cornerRadius = 10
-        button.layer.borderWidth = 0.7
+    lazy var registerButton: MainButton = {
+        let button = MainButton()
+        button.titleButton = .register
         button.addTarget(self, action: #selector(saveUser(_:)), for: .touchUpInside)
         return button
     }()
@@ -251,15 +245,6 @@ class RegisterViewController: UIViewController {
         label.adjustsFontSizeToFitWidth = true
         label.textColor = .black
         return label
-    }
-    
-    private func setButton(text: String, textColor: UIColor, font: String, fontSize: Float) -> UIButton {
-        let button = UIButton()
-        button.translatesAutoresizingMaskIntoConstraints = false
-        button.setTitle(text, for: .normal)
-        button.setTitleColor(textColor, for: .normal)
-        button.titleLabel?.font = UIFont(name: font, size: CGFloat(fontSize))
-        return button
     }
     
     @objc private func loadPhoto(_: UIButton) {

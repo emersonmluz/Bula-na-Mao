@@ -36,16 +36,16 @@ class MainPageViewController: UIViewController {
         return label
     }()
     
-    lazy var historyButton: CustomSegmentedControl = {
-        let button = CustomSegmentedControl()
+    lazy var historyButton: MainSegmentedControl = {
+        let button = MainSegmentedControl()
         button.translatesAutoresizingMaskIntoConstraints = false
         button.setTitleButton(title: "Histórico")
         button.button.addTarget(self, action: #selector(historyButtonAction(_:)), for: .touchUpInside)
         return button
     }()
     
-    lazy var favoriteButton: CustomSegmentedControl = {
-        let segmentedControl = CustomSegmentedControl()
+    lazy var favoriteButton: MainSegmentedControl = {
+        let segmentedControl = MainSegmentedControl()
         segmentedControl.translatesAutoresizingMaskIntoConstraints = false
         segmentedControl.setTitleButton(title: " Favoritos")
         let image = UIImage(systemName: "star.fill")
@@ -131,13 +131,13 @@ class MainPageViewController: UIViewController {
         ])
     }
     
-    @objc private func historyButtonAction(_: CustomSegmentedControl) {
+    @objc private func historyButtonAction(_: MainSegmentedControl) {
         historyButton.isActive(true)
         favoriteButton.isActive(false)
         favoriteButton.button.tintColor = .systemGray4
     }
     
-    @objc private func favoriteButtonAction(_: CustomSegmentedControl) {
+    @objc private func favoriteButtonAction(_: MainSegmentedControl) {
         favoriteButton.isActive(true)
         favoriteButton.button.tintColor = .systemYellow
         historyButton.isActive(false)

@@ -46,11 +46,8 @@ class LoginViewController: UIViewController {
         return textField
     }()
     
-    lazy var loginButton: UIButton = {
-        let button = setButton(text: "Login", textColor: .white, font: "Arial-BoldMT", fontSize: 20)
-        button.backgroundColor = .systemPurple
-        button.layer.cornerRadius = 10
-        button.layer.borderWidth = 0.7
+    lazy var loginButton: MainButton = {
+        let button = MainButton()
         button.addTarget(self, action: #selector(tapLoginButton(_:)), for: .touchUpInside)
         return button
     }()
@@ -60,7 +57,11 @@ class LoginViewController: UIViewController {
     }()
     
     lazy var registerButton: UIButton = {
-        let button = setButton(text: "Clique aqui", textColor: .link, font: "Arial-BoldMT", fontSize: 18)
+        let button = UIButton()
+        button.translatesAutoresizingMaskIntoConstraints = false
+        button.setTitle("Clique aqui", for: .normal)
+        button.setTitleColor(.link, for: .normal)
+        button.titleLabel?.font = UIFont(name: "Arial-BoldMT", size: CGFloat(18))
         button.addTarget(self, action: #selector(tapRegisterButton(_:)), for: .touchUpInside)
         return button
     }()
@@ -173,15 +174,6 @@ class LoginViewController: UIViewController {
         label.textColor = textColor
         label.adjustsFontSizeToFitWidth = true
         return label
-    }
-    
-    private func setButton(text: String, textColor: UIColor, font: String, fontSize: Float) -> UIButton {
-        let button = UIButton()
-        button.translatesAutoresizingMaskIntoConstraints = false
-        button.setTitle(text, for: .normal)
-        button.setTitleColor(textColor, for: .normal)
-        button.titleLabel?.font = UIFont(name: font, size: CGFloat(fontSize))
-        return button
     }
     
     @objc private func tapRegisterButton(_: UIButton) {
