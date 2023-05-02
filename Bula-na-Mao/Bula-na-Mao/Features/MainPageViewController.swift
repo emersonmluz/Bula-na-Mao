@@ -6,6 +6,8 @@
 //
 
 import UIKit
+import FirebaseAuth
+import FirebaseFirestore
 
 class MainPageViewController: UIViewController {
     let containerView: UIView = {
@@ -18,7 +20,6 @@ class MainPageViewController: UIViewController {
     lazy var perfilImageView: UIImageView = {
         let imageView = UIImageView()
         imageView.translatesAutoresizingMaskIntoConstraints = false
-        imageView.image = UIImage(systemName: "person.fill")
         imageView.tintColor = .systemBlue
         imageView.contentMode = .scaleToFill
         imageView.clipsToBounds = true
@@ -29,7 +30,6 @@ class MainPageViewController: UIViewController {
         let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
         label.font = UIFont(name: "Arial", size: 18)
-        label.text = "Rambo Cabra Grossa e Forte"
         label.textAlignment = .left
         label.adjustsFontSizeToFitWidth = true
         label.textColor = .white
@@ -87,14 +87,23 @@ class MainPageViewController: UIViewController {
     }
     
     private func setupUI() {
-        configComponents()
+        setUserCurrent()
         setComponents()
         setConstraint()
+        configComponents()
+    }
+    
+    private func setUserCurrent() {
+        FirebaseManager.shared.getUserDocument() { user in
+            self.userNameLabel.text = user["name"] as? String
+            let photo = "\(user["photo"] ?? "")"
+            self.perfilImageView.image = photo.extractImageFromBase64
+        }
     }
     
     private func configComponents() {
         view.backgroundColor = .systemGray6
-        perfilImageView.layer.cornerRadius = perfilImageView.bounds.height / 2
+        perfilImageView.layer.cornerRadius = perfilImageView.frame.height / 2
     }
     
     private func setComponents() {
@@ -117,7 +126,7 @@ class MainPageViewController: UIViewController {
             perfilImageView.heightAnchor.constraint(equalToConstant: 50),
             perfilImageView.widthAnchor.constraint(equalToConstant: 50),
             
-            userNameLabel.topAnchor.constraint(equalTo: perfilImageView.centerYAnchor, constant: -5),
+            userNameLabel.topAnchor.constraint(equalTo: perfilImageView.centerYAnchor, constant: -10),
             userNameLabel.leadingAnchor.constraint(equalTo: perfilImageView.trailingAnchor, constant: 15),
             userNameLabel.trailingAnchor.constraint(equalTo: containerView.trailingAnchor, constant: -20),
             

@@ -23,6 +23,15 @@ class FirebaseManager {
         }
     }
     
+    func getUserDocument(completion: @escaping(([String: Any]) -> Void)) {
+        let _: Void = dataBase.collection("users").whereField("email", isEqualTo: Auth.auth().currentUser?.email ?? "").getDocuments() { (querySnapshot, error) in
+            guard error == nil else {return}
+            for document in querySnapshot!.documents {
+                completion(document.data())
+            }
+        }
+    }
+    
     func saveUserData(name: String, email: String, password: String, photo: String, completion: @escaping((_ titleMessage: String, _ message: String, _ actionTitle: String) -> Void)) {
 
         Auth.auth().createUser(withEmail: email, password: password) { [self] authResult, error in

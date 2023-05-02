@@ -5,7 +5,7 @@
 //  Created by Émerson M Luz on 26/04/23.
 //
 
-import Foundation
+import UIKit
 
 extension String {
    var containsSpecialCharacter: Bool {
@@ -31,4 +31,11 @@ extension String {
             let testString = NSPredicate(format:"SELF MATCHES %@", regex)
             return testString.evaluate(with: self)
         }
+    
+    var extractImageFromBase64: UIImage? {
+        guard let imageData = Data(base64Encoded: self, options: .ignoreUnknownCharacters) else {
+            return nil
+        }
+        return UIImage(data: imageData)
+    }
 }
