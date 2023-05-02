@@ -13,6 +13,7 @@
 		EEC4BA5B2A00681300B8EE64 /* MedicinesTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = EEC4BA5A2A00681300B8EE64 /* MedicinesTableViewCell.swift */; };
 		EEC4BA622A013D4900B8EE64 /* MedicineModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = EEC4BA612A013D4900B8EE64 /* MedicineModel.swift */; };
 		EEC4BA642A01454100B8EE64 /* MedicineResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = EEC4BA632A01454100B8EE64 /* MedicineResponse.swift */; };
+		EEC4BA662A01470500B8EE64 /* ApiManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = EEC4BA652A01470500B8EE64 /* ApiManager.swift */; };
 		EEEB1B4A29F0610E00BBC268 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = EEEB1B4929F0610E00BBC268 /* AppDelegate.swift */; };
 		EEEB1B4C29F0610E00BBC268 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = EEEB1B4B29F0610E00BBC268 /* SceneDelegate.swift */; };
 		EEEB1B4E29F0610E00BBC268 /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EEEB1B4D29F0610E00BBC268 /* LoginViewController.swift */; };
@@ -35,6 +36,7 @@
 		EEC4BA5A2A00681300B8EE64 /* MedicinesTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MedicinesTableViewCell.swift; sourceTree = "<group>"; };
 		EEC4BA612A013D4900B8EE64 /* MedicineModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MedicineModel.swift; sourceTree = "<group>"; };
 		EEC4BA632A01454100B8EE64 /* MedicineResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MedicineResponse.swift; sourceTree = "<group>"; };
+		EEC4BA652A01470500B8EE64 /* ApiManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ApiManager.swift; sourceTree = "<group>"; };
 		EEEB1B4629F0610E00BBC268 /* Bula-na-Mao.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Bula-na-Mao.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		EEEB1B4929F0610E00BBC268 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		EEEB1B4B29F0610E00BBC268 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -163,6 +165,7 @@
 			children = (
 				EEC4BA602A013CF100B8EE64 /* Models */,
 				EEEB1B6D29F9609500BBC268 /* Extensions */,
+				EEC4BA652A01470500B8EE64 /* ApiManager.swift */,
 				EEEB1B6929F8B8BB00BBC268 /* FirebaseManager.swift */,
 				EEEB1B6B29F9604800BBC268 /* Validations.swift */,
 			);
@@ -304,6 +307,7 @@
 				EEC4BA5929FFEA0600B8EE64 /* MainButton.swift in Sources */,
 				EEEB1B6029F1C5B400BBC268 /* RegisterViewController.swift in Sources */,
 				EEEB1B6F29F960C400BBC268 /* StringExtension.swift in Sources */,
+				EEC4BA662A01470500B8EE64 /* ApiManager.swift in Sources */,
 				EEEB1B6229F1C8E200BBC268 /* MainPageViewController.swift in Sources */,
 				EEEB1B6A29F8B8BB00BBC268 /* FirebaseManager.swift in Sources */,
 				EEEB1B6C29F9604800BBC268 /* Validations.swift in Sources */,
