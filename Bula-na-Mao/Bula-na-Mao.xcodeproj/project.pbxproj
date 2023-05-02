@@ -78,6 +78,7 @@
 		EEC4BA5229FC2A4500B8EE64 /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				EEC4BA5F2A0139FC00B8EE64 /* Cells */,
 				EEC4BA5329FC2A5D00B8EE64 /* Reusables */,
 			);
 			name = Views;
@@ -88,9 +89,16 @@
 			children = (
 				EEC4BA5429FC2A9000B8EE64 /* MainSegmentedControl.swift */,
 				EEC4BA5829FFEA0600B8EE64 /* MainButton.swift */,
-				EEC4BA5A2A00681300B8EE64 /* MedicinesTableViewCell.swift */,
 			);
 			name = Reusables;
+			sourceTree = "<group>";
+		};
+		EEC4BA5F2A0139FC00B8EE64 /* Cells */ = {
+			isa = PBXGroup;
+			children = (
+				EEC4BA5A2A00681300B8EE64 /* MedicinesTableViewCell.swift */,
+			);
+			name = Cells;
 			sourceTree = "<group>";
 		};
 		EEEB1B3D29F0610E00BBC268 = {
