@@ -170,8 +170,8 @@ class MainPageViewController: UIViewController {
     }
     
     private func apiRequest() {
-        guard let medicine = searchTextField.text, medicine != "" else {return}
-        ApiManager.shared.fetchData(medicine: medicine) { response, error in
+        guard let search = searchTextField.text, search != "" else {return}
+        ApiManager.shared.fetchData(medicine: search) { response, error in
             if let response = response {
                 self.medicines = response
                 self.medicinesTableView.reloadData()
