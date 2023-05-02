@@ -10,6 +10,8 @@ import FirebaseAuth
 import FirebaseFirestore
 
 class MainPageViewController: UIViewController {
+    var medicines: MedicineResponse?
+    
     let containerView: UIView = {
         let view = UIView()
         view.translatesAutoresizingMaskIntoConstraints = false
@@ -56,7 +58,7 @@ class MainPageViewController: UIViewController {
         return segmentedControl
     }()
     
-    let searchTextField: UITextField = {
+    lazy var searchTextField: UITextField = {
         let textField = UITextField()
         textField.translatesAutoresizingMaskIntoConstraints = false
         textField.backgroundColor = .white
@@ -70,6 +72,7 @@ class MainPageViewController: UIViewController {
         imageView.tintColor = .systemBlue
         textField.rightViewMode = .always
         textField.rightView = imageView
+        textField.delegate = self
         return textField
     }()
     
@@ -165,16 +168,45 @@ class MainPageViewController: UIViewController {
         favoriteButton.button.tintColor = .systemYellow
         historyButton.isActive(false)
     }
+    
+    private func apiRequest() {
+        guard let medicine = searchTextField.text, medicine != "" else {return}
+        ApiManager.shared.fetchData(medicine: medicine) { response, error in
+            if let response = response {
+                self.medicines = response
+                self.medicinesTableView.reloadData()
+            } else {
+                let alert = UIAlertController(title: "Erro", message: "Falha ao buscar dados.", preferredStyle: .alert)
+                let action = UIAlertAction(title: "OK", style: .default)
+                alert.addAction(action)
+                alert.view.backgroundColor = .white
+                self.present(alert, animated: true)
+            }
+        }
+    }
 }
 
 extension MainPageViewController: UITableViewDataSource, UITableViewDelegate {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 10
+        return medicines?.content.count ?? 0
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: MedicinesTableViewCell.medicinesCell) as! MedicinesTableViewCell
+        cell.setCell(medicine: medicines?.content[indexPath.row].name ?? "", laboratory: medicines?.content[indexPath.row].laboratory ?? "")
         return cell
     }
     
+}
+
+extension MainPageViewController: UITextFieldDelegate {
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        textField.endEditing(true)
+        return true
+    }
+    
+    func textFieldShouldEndEditing(_ textField: UITextField) -> Bool {
+        apiRequest()
+        return true
+    }
 }
