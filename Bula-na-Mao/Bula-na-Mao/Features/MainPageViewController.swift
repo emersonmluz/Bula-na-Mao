@@ -176,7 +176,7 @@ class MainPageViewController: UIViewController {
                 self.medicines = response
                 self.medicinesTableView.reloadData()
             } else {
-                let alert = UIAlertController(title: "Erro", message: "Falha ao buscar dados.", preferredStyle: .alert)
+                let alert = UIAlertController(title: "Falha", message: error, preferredStyle: .alert)
                 let action = UIAlertAction(title: "OK", style: .default)
                 alert.addAction(action)
                 alert.view.backgroundColor = .white

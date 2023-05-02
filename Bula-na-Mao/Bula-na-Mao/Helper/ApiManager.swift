@@ -13,7 +13,7 @@ class ApiManager {
     private var url = "https://bula.vercel.app/pesquisar?nome="
     static var shared = ApiManager()
     
-    func fetchData(medicine: String, completion: @escaping(_: MedicineResponse?, _: NSError?) -> Void) {
+    func fetchData(medicine: String, completion: @escaping(_: MedicineResponse?, _: String?) -> Void) {
         alamofireManager.request(self.url + medicine.uppercased()).validate(statusCode: 200..<300).validate(contentType: ["application/json"]).response { response in
             switch response.result {
             case .success:
@@ -21,12 +21,15 @@ class ApiManager {
                 do {
                     let response = try JSONDecoder().decode(MedicineResponse.self, from: jsonData)
                     completion(response, nil)
-                } catch let error as NSError {
-                    completion(nil, error)
+                } catch {
+                    completion(nil, "Algo deu errado, tente novamente mais tarde.")
                 }
             case .failure:
-                guard let error = response.error as? NSError else {return}
-                completion(nil, error)
+                if response.response?.statusCode == 504 {
+                    completion(nil, "Tentativas de conexão excedida.")
+                } else {
+                   completion(nil, "Falha ao buscar medicamento.")
+                }
             }
         }
     }
