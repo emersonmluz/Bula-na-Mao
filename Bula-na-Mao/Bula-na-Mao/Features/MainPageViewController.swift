@@ -65,6 +65,11 @@ class MainPageViewController: UIViewController {
         textField.textAlignment = .center
         textField.font = UIFont(name: "Arial", size: 18)
         textField.layer.borderWidth = 0.1
+        let imageView = UIImageView()
+        imageView.image = UIImage(systemName: "magnifyingglass")
+        imageView.tintColor = .systemBlue
+        textField.rightViewMode = .always
+        textField.rightView = imageView
         return textField
     }()
     
