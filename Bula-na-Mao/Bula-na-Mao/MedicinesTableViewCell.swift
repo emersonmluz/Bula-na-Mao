@@ -10,11 +10,10 @@ import UIKit
 class MedicinesTableViewCell: UITableViewCell {
     static let medicinesCell = "medicinesCell"
     lazy var medicineLabel = setLabel(text: "", textColor: .black, fontSize: 18)
-    lazy var laboratoryLabel = setLabel(text: "", textColor: .systemGray4, fontSize: 16)
+    lazy var laboratoryLabel = setLabel(text: "", textColor: .systemGray3, fontSize: 16)
     
     override func awakeFromNib() {
         super.awakeFromNib()
-        setupUI()
     }
     
     private func setupUI() {
@@ -29,18 +28,19 @@ class MedicinesTableViewCell: UITableViewCell {
     
     private func setConstraints() {
         NSLayoutConstraint.activate([
-            medicineLabel.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 10),
+            medicineLabel.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 15),
             medicineLabel.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 20),
             medicineLabel.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -50),
             
-            laboratoryLabel.topAnchor.constraint(equalTo: medicineLabel.topAnchor, constant: 5),
+            laboratoryLabel.topAnchor.constraint(equalTo: medicineLabel.bottomAnchor, constant: 5),
             laboratoryLabel.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 20),
             laboratoryLabel.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -50),
-            laboratoryLabel.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -20)
+            laboratoryLabel.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -15)
         ])
     }
     
     func setCell(medicine: String, laboratory: String) {
+        setupUI()
         medicineLabel.text = medicine
         laboratoryLabel.text = laboratory
     }
@@ -51,7 +51,7 @@ class MedicinesTableViewCell: UITableViewCell {
         label.font = UIFont(name: "Arial", size: CGFloat(fontSize))
         label.text = text
         label.textColor = textColor
-        label.adjustsFontSizeToFitWidth = true
+        label.numberOfLines = 0
         return label
     }
 

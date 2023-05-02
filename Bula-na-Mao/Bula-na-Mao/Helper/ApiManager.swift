@@ -26,7 +26,7 @@ class ApiManager {
                 }
             case .failure:
                 if response.response?.statusCode == 504 {
-                    completion(nil, "Tentativas de conexão excedida.")
+                    completion(nil, "Falha na conexão.")
                 } else {
                    completion(nil, "Falha ao buscar medicamento.")
                 }

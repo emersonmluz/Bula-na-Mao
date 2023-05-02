@@ -61,12 +61,11 @@ class MainPageViewController: UIViewController {
     lazy var searchTextField: UITextField = {
         let textField = UITextField()
         textField.translatesAutoresizingMaskIntoConstraints = false
-        textField.backgroundColor = .white
+        textField.backgroundColor = .systemGray6
         textField.placeholder = "Pesquisar"
         textField.textColor = .darkGray
         textField.textAlignment = .center
         textField.font = UIFont(name: "Arial", size: 18)
-        textField.layer.borderWidth = 0.1
         let imageView = UIImageView()
         imageView.image = UIImage(systemName: "magnifyingglass")
         imageView.tintColor = .systemBlue
@@ -81,7 +80,7 @@ class MainPageViewController: UIViewController {
         tableView.translatesAutoresizingMaskIntoConstraints = false
         tableView.dataSource = self
         tableView.delegate = self
-        tableView.register(UITableViewCell.self, forCellReuseIdentifier: MedicinesTableViewCell.medicinesCell)
+        tableView.register(MedicinesTableViewCell.self, forCellReuseIdentifier: MedicinesTableViewCell.medicinesCell)
         return tableView
     }()
     
@@ -110,7 +109,7 @@ class MainPageViewController: UIViewController {
     }
     
     private func configComponents() {
-        view.backgroundColor = .systemGray6
+        view.backgroundColor = .white
         perfilImageView.layer.cornerRadius = perfilImageView.frame.height / 2
     }
     
@@ -121,6 +120,7 @@ class MainPageViewController: UIViewController {
         containerView.addSubview(historyButton)
         containerView.addSubview(favoriteButton)
         view.addSubview(searchTextField)
+        view.addSubview(medicinesTableView)
     }
     
     private func setConstraint() {
@@ -153,7 +153,12 @@ class MainPageViewController: UIViewController {
             searchTextField.topAnchor.constraint(equalTo: containerView.bottomAnchor),
             searchTextField.leadingAnchor.constraint(equalTo: view.leadingAnchor),
             searchTextField.trailingAnchor.constraint(equalTo: view.trailingAnchor),
-            searchTextField.heightAnchor.constraint(equalToConstant: 35)
+            searchTextField.heightAnchor.constraint(equalToConstant: 35),
+            
+            medicinesTableView.topAnchor.constraint(equalTo: searchTextField.bottomAnchor, constant: 10),
+            medicinesTableView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
+            medicinesTableView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
+            medicinesTableView.bottomAnchor.constraint(equalTo: view.bottomAnchor)
         ])
     }
     
@@ -172,11 +177,17 @@ class MainPageViewController: UIViewController {
     private func apiRequest() {
         guard let search = searchTextField.text, search != "" else {return}
         ApiManager.shared.fetchData(medicine: search) { response, error in
-            if let response = response {
+            if response?.content.count ?? 0 > 0 {
                 self.medicines = response
                 self.medicinesTableView.reloadData()
             } else {
-                let alert = UIAlertController(title: "Falha", message: error, preferredStyle: .alert)
+                var message: String
+                if let error = error {
+                    message = error
+                } else {
+                    message = "Medicamento não encontrado."
+                }
+                let alert = UIAlertController(title: "Falha", message: message, preferredStyle: .alert)
                 let action = UIAlertAction(title: "OK", style: .default)
                 alert.addAction(action)
                 alert.view.backgroundColor = .white

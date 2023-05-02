@@ -20,7 +20,7 @@ class MainSegmentedControl: UIView {
     private let bottonBarView: UIView = {
         let view = UIView()
         view.translatesAutoresizingMaskIntoConstraints = false
-        view.backgroundColor = .systemGray6
+        view.backgroundColor = .white
         return view
     }()
     

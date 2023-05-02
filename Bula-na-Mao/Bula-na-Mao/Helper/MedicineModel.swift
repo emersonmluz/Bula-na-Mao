@@ -11,12 +11,10 @@ struct MedicineModel: Decodable {
     var id: String
     var name: String
     var laboratory: String
-    var cnpj: String
     
     enum CodingKeys: String, CodingKey {
         case id = "idBulaPacienteProtegido"
         case name = "nomeProduto"
         case laboratory = "razaoSocial"
-        case cnpj
     }
 }
