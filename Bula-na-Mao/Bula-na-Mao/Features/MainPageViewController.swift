@@ -61,11 +61,12 @@ class MainPageViewController: UIViewController {
     lazy var searchTextField: UITextField = {
         let textField = UITextField()
         textField.translatesAutoresizingMaskIntoConstraints = false
-        textField.backgroundColor = .systemGray6
+        textField.backgroundColor = .white
         textField.placeholder = "Pesquisar"
         textField.textColor = .darkGray
         textField.textAlignment = .center
         textField.font = UIFont(name: "Arial", size: 18)
+        textField.layer.borderWidth = 0.2
         let imageView = UIImageView()
         imageView.image = UIImage(systemName: "magnifyingglass")
         imageView.tintColor = .systemBlue
