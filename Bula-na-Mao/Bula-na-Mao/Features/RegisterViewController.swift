@@ -123,7 +123,7 @@ class RegisterViewController: UIViewController {
         let view = UIView()
         view.translatesAutoresizingMaskIntoConstraints = false
         view.backgroundColor = .black
-        view.layer.opacity = 0.5
+        view.layer.opacity = 0.2
         view.isHidden = true
         return view
     }()
@@ -132,6 +132,7 @@ class RegisterViewController: UIViewController {
         let activityIndicator = UIActivityIndicatorView()
         activityIndicator.translatesAutoresizingMaskIntoConstraints = false
         activityIndicator.style = .large
+        activityIndicator.color = .white
         return activityIndicator
     }()
     

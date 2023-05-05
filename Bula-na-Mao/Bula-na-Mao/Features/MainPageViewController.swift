@@ -85,6 +85,23 @@ class MainPageViewController: UIViewController {
         return tableView
     }()
     
+    var loadingView: UIView = {
+        let view = UIView()
+        view.translatesAutoresizingMaskIntoConstraints = false
+        view.backgroundColor = .black
+        view.layer.opacity = 0.2
+        view.isHidden = true
+        return view
+    }()
+    
+    var spinnerLoading: UIActivityIndicatorView = {
+        let activity = UIActivityIndicatorView()
+        activity.translatesAutoresizingMaskIntoConstraints = false
+        activity.color = .white
+        activity.style = .large
+        return activity
+    }()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         setupUI()
@@ -122,6 +139,8 @@ class MainPageViewController: UIViewController {
         containerView.addSubview(favoriteButton)
         view.addSubview(searchTextField)
         view.addSubview(medicinesTableView)
+        view.addSubview(loadingView)
+        loadingView.addSubview(spinnerLoading)
     }
     
     private func setConstraint() {
@@ -159,7 +178,15 @@ class MainPageViewController: UIViewController {
             medicinesTableView.topAnchor.constraint(equalTo: searchTextField.bottomAnchor, constant: 10),
             medicinesTableView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
             medicinesTableView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
-            medicinesTableView.bottomAnchor.constraint(equalTo: view.bottomAnchor)
+            medicinesTableView.bottomAnchor.constraint(equalTo: view.bottomAnchor),
+            
+            loadingView.topAnchor.constraint(equalTo: searchTextField.bottomAnchor),
+            loadingView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
+            loadingView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
+            loadingView.bottomAnchor.constraint(equalTo: view.bottomAnchor),
+            
+            spinnerLoading.centerXAnchor.constraint(equalTo: loadingView.centerXAnchor),
+            spinnerLoading.centerYAnchor.constraint(equalTo: loadingView.centerYAnchor)
         ])
     }
     
@@ -175,8 +202,21 @@ class MainPageViewController: UIViewController {
         historyButton.isActive(false)
     }
     
+    private func startLoading() {
+        loadingView.isHidden = false
+        spinnerLoading.startAnimating()
+        containerView.isUserInteractionEnabled = false
+    }
+    
+    private func stopLoading() {
+        loadingView.isHidden = true
+        spinnerLoading.stopAnimating()
+        containerView.isUserInteractionEnabled = true
+    }
+    
     private func apiRequest() {
         guard let search = searchTextField.text, search != "" else {return}
+        startLoading()
         ApiManager.shared.fetchData(medicine: search) { response, error in
             if response?.content.count ?? 0 > 0 {
                 self.medicines = response
@@ -194,6 +234,7 @@ class MainPageViewController: UIViewController {
                 alert.view.backgroundColor = .white
                 self.present(alert, animated: true)
             }
+            self.stopLoading()
         }
     }
 }
