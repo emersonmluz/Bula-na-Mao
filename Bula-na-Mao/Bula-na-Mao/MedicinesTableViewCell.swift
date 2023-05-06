@@ -11,6 +11,14 @@ class MedicinesTableViewCell: UITableViewCell {
     static let medicinesCell = "medicinesCell"
     lazy var medicineLabel = setLabel(text: "", textColor: .black, fontSize: 18)
     lazy var laboratoryLabel = setLabel(text: "", textColor: .systemGray3, fontSize: 16)
+    var favoriteImage: UIImageView = {
+        let imageView = UIImageView()
+        imageView.translatesAutoresizingMaskIntoConstraints = false
+        imageView.image = UIImage(systemName: "star")
+        imageView.tintColor = .systemGray3
+        imageView.contentMode = .scaleAspectFit
+        return imageView
+    }()
     
     override func awakeFromNib() {
         super.awakeFromNib()
@@ -24,6 +32,7 @@ class MedicinesTableViewCell: UITableViewCell {
     private func setComponents() {
         contentView.addSubview(medicineLabel)
         contentView.addSubview(laboratoryLabel)
+        contentView.addSubview(favoriteImage)
     }
     
     private func setConstraints() {
@@ -35,7 +44,12 @@ class MedicinesTableViewCell: UITableViewCell {
             laboratoryLabel.topAnchor.constraint(equalTo: medicineLabel.bottomAnchor, constant: 5),
             laboratoryLabel.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 20),
             laboratoryLabel.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -50),
-            laboratoryLabel.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -15)
+            laboratoryLabel.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -15),
+            
+            favoriteImage.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 15),
+            favoriteImage.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -10),
+            favoriteImage.heightAnchor.constraint(equalToConstant: 30),
+            favoriteImage.widthAnchor.constraint(equalToConstant: 30)
         ])
     }
     
