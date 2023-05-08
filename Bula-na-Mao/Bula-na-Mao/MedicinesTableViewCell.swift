@@ -9,9 +9,10 @@ import UIKit
 
 class MedicinesTableViewCell: UITableViewCell {
     static let medicinesCell = "medicinesCell"
-    lazy var medicineLabel = setLabel(text: "", textColor: .black, fontSize: 18)
-    lazy var laboratoryLabel = setLabel(text: "", textColor: .systemGray3, fontSize: 16)
-    lazy var favoriteImage: UIImageView = {
+    private lazy var medicineLabel = setLabel(text: "", textColor: .black, fontSize: 18)
+    private lazy var laboratoryLabel = setLabel(text: "", textColor: .systemGray3, fontSize: 16)
+    
+    private var favoriteImage: UIImageView = {
         let imageView = UIImageView()
         imageView.translatesAutoresizingMaskIntoConstraints = false
         imageView.image = UIImage(systemName: "star")
@@ -20,6 +21,19 @@ class MedicinesTableViewCell: UITableViewCell {
         imageView.isUserInteractionEnabled = true
         return imageView
     }()
+    
+    var isFavorite: Bool = false {
+        didSet {
+            if isFavorite == false {
+                favoriteImage.image = UIImage(systemName: "star")
+                favoriteImage.tintColor = .systemGray3
+                
+            } else {
+                favoriteImage.image = UIImage(systemName: "star.fill")
+                favoriteImage.tintColor = .systemYellow
+            }
+        }
+    }
     
     var gestureHandler: (() -> Void)?
     
@@ -79,6 +93,7 @@ class MedicinesTableViewCell: UITableViewCell {
     }
     
     @objc private func tapFavoriteImage(_ sender: UITapGestureRecognizer) {
+        isFavorite = !(isFavorite)
         gestureHandler?()
     }
 }

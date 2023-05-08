@@ -18,6 +18,7 @@ class MainPageViewController: UIViewController {
     var favorites: [MedicineModel] = []
     var history: [MedicineModel] = []
     var keyword: Keyword = .history
+    var object: [MedicineModel] = []
     
     let containerView: UIView = {
         let view = UIView()
@@ -203,7 +204,7 @@ class MainPageViewController: UIViewController {
         historyButton.isActive(true)
         favoriteButton.isActive(false)
         favoriteButton.button.tintColor = .systemGray4
-        keyword = .history
+        object = history
         startLoading()
         medicinesTableView.reloadData()
         Timer.scheduledTimer(withTimeInterval: 0.5, repeats: false) { _ in
@@ -216,7 +217,7 @@ class MainPageViewController: UIViewController {
         favoriteButton.isActive(true)
         favoriteButton.button.tintColor = .systemYellow
         historyButton.isActive(false)
-        keyword = .favorites
+        object = favorites
         startLoading()
         medicinesTableView.reloadData()
         Timer.scheduledTimer(withTimeInterval: 0.5, repeats: false) { _ in
@@ -242,7 +243,7 @@ class MainPageViewController: UIViewController {
         ApiManager.shared.fetchData(medicine: search) { response, error in
             if response?.content.count ?? 0 > 0 {
                 self.medicines = response
-                self.keyword = .medicines
+                self.object = self.medicines?.content ?? []
                 self.medicinesTableView.reloadData()
             } else {
                 var message: String
@@ -260,45 +261,28 @@ class MainPageViewController: UIViewController {
             self.stopLoading()
         }
     }
-    
-    private func validateObject() -> [MedicineModel] {
-        switch keyword {
-        case .history:
-            return history
-        case .favorites:
-            return favorites
-        case .medicines:
-            return medicines?.content ?? []
-        }
-    }
 }
 
 extension MainPageViewController: UITableViewDataSource, UITableViewDelegate {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        let object = validateObject()
         return object.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: MedicinesTableViewCell.medicinesCell) as! MedicinesTableViewCell
-        let objects = validateObject()
-        cell.setCell(medicine: objects[indexPath.row].name, laboratory: objects[indexPath.row].laboratory)
+        cell.setCell(medicine: object[indexPath.row].name, laboratory: object[indexPath.row].laboratory)
         cell.gestureHandler = {
-            if cell.favoriteImage.tintColor == .systemYellow {
-                cell.favoriteImage.image = UIImage(systemName: "star")
-                cell.favoriteImage.tintColor = .systemGray3
+            if cell.isFavorite == false {
                 var cont = 0
-                for lab in self.favorites {
-                    if lab.name == cell.medicineLabel.text, lab.laboratory == cell.laboratoryLabel.text {
+                for favorite in self.favorites {
+                    if self.object[indexPath.row].name == favorite.name, self.object[indexPath.row].laboratory == favorite.laboratory {
                         self.favorites.remove(at: cont)
                         break
                     }
                     cont += 1
                 }
             } else {
-                cell.favoriteImage.image = UIImage(systemName: "star.fill")
-                cell.favoriteImage.tintColor = .systemYellow
-                self.favorites.append(objects[indexPath.row])
+                self.favorites.append(self.object[indexPath.row])
             }
         }
         return cell
@@ -306,8 +290,7 @@ extension MainPageViewController: UITableViewDataSource, UITableViewDelegate {
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: true)
-        guard let medicine = medicines?.content[indexPath.row] else {return}
-        self.history.append(medicine)
+        self.history.append(object[indexPath.row])
     }
     
 }
