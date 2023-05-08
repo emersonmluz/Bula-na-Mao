@@ -11,6 +11,8 @@ import FirebaseFirestore
 
 class MainPageViewController: UIViewController {
     var medicines: MedicineResponse?
+    var favorites: [MedicineModel] = []
+    var history: [MedicineModel] = []
     
     let containerView: UIView = {
         let view = UIView()
@@ -247,7 +249,32 @@ extension MainPageViewController: UITableViewDataSource, UITableViewDelegate {
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: MedicinesTableViewCell.medicinesCell) as! MedicinesTableViewCell
         cell.setCell(medicine: medicines?.content[indexPath.row].name ?? "", laboratory: medicines?.content[indexPath.row].laboratory ?? "")
+        cell.gestureHandler = {
+            guard let medicine = self.medicines?.content[indexPath.row] else {return}
+            if cell.favoriteImage.tintColor == .systemYellow {
+                cell.favoriteImage.image = UIImage(systemName: "star")
+                cell.favoriteImage.tintColor = .systemGray3
+                var cont = 0
+                for lab in self.favorites {
+                    if lab.name == cell.medicineLabel.text, lab.laboratory == cell.laboratoryLabel.text {
+                        self.favorites.remove(at: cont)
+                        break
+                    }
+                    cont += 1
+                }
+            } else {
+                cell.favoriteImage.image = UIImage(systemName: "star.fill")
+                cell.favoriteImage.tintColor = .systemYellow
+                self.favorites.append(medicine)
+            }
+        }
         return cell
+    }
+    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        tableView.deselectRow(at: indexPath, animated: true)
+        guard let medicine = medicines?.content[indexPath.row] else {return}
+        self.history.append(medicine)
     }
     
 }

@@ -11,14 +11,17 @@ class MedicinesTableViewCell: UITableViewCell {
     static let medicinesCell = "medicinesCell"
     lazy var medicineLabel = setLabel(text: "", textColor: .black, fontSize: 18)
     lazy var laboratoryLabel = setLabel(text: "", textColor: .systemGray3, fontSize: 16)
-    var favoriteImage: UIImageView = {
+    lazy var favoriteImage: UIImageView = {
         let imageView = UIImageView()
         imageView.translatesAutoresizingMaskIntoConstraints = false
         imageView.image = UIImage(systemName: "star")
         imageView.tintColor = .systemGray3
         imageView.contentMode = .scaleAspectFit
+        imageView.isUserInteractionEnabled = true
         return imageView
     }()
+    
+    var gestureHandler: (() -> Void)?
     
     override func awakeFromNib() {
         super.awakeFromNib()
@@ -57,6 +60,12 @@ class MedicinesTableViewCell: UITableViewCell {
         setupUI()
         medicineLabel.text = medicine
         laboratoryLabel.text = laboratory
+        setTapInImage()
+    }
+    
+    private func setTapInImage() {
+        let touch = UITapGestureRecognizer(target: self, action: #selector(tapFavoriteImage(_:)))
+        favoriteImage.addGestureRecognizer(touch)
     }
     
     private func setLabel(text: String, textColor: UIColor, fontSize: Float) -> UILabel {
@@ -68,5 +77,8 @@ class MedicinesTableViewCell: UITableViewCell {
         label.numberOfLines = 0
         return label
     }
-
+    
+    @objc private func tapFavoriteImage(_ sender: UITapGestureRecognizer) {
+        gestureHandler?()
+    }
 }
