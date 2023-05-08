@@ -12,7 +12,7 @@ class MedicinesTableViewCell: UITableViewCell {
     private lazy var medicineLabel = setLabel(text: "", textColor: .black, fontSize: 18)
     private lazy var laboratoryLabel = setLabel(text: "", textColor: .systemGray3, fontSize: 16)
     
-    private var favoriteImage: UIImageView = {
+    var favoriteImage: UIImageView = {
         let imageView = UIImageView()
         imageView.translatesAutoresizingMaskIntoConstraints = false
         imageView.image = UIImage(systemName: "star")

@@ -271,6 +271,12 @@ extension MainPageViewController: UITableViewDataSource, UITableViewDelegate {
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: MedicinesTableViewCell.medicinesCell) as! MedicinesTableViewCell
         cell.setCell(medicine: object[indexPath.row].name, laboratory: object[indexPath.row].laboratory)
+        cell.isFavorite = false
+        for favorite in self.favorites {
+            if self.object[indexPath.row].name == favorite.name, self.object[indexPath.row].laboratory == favorite.laboratory {
+                cell.isFavorite = true
+            }
+        }
         cell.gestureHandler = {
             if cell.isFavorite == false {
                 var cont = 0
