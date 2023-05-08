@@ -7,6 +7,6 @@
 
 import Foundation
 
-struct MedicineResponse: Decodable {
+struct MedicineResponse: Codable {
     var content: [MedicineModel]
 }

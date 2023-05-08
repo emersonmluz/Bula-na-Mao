@@ -7,7 +7,7 @@
 
 import Foundation
 
-struct MedicineModel: Decodable {
+struct MedicineModel: Codable {
     var id: String
     var name: String
     var laboratory: String

@@ -10,14 +10,9 @@ import FirebaseAuth
 import FirebaseFirestore
 
 class MainPageViewController: UIViewController {
-    enum Keyword {
-        case medicines, favorites, history
-    }
-    
+    var userFavorite: [MedicineModel] = UserDefaults.standard.value(forKey: "favorites") as? [MedicineModel] ?? []
+    var userHistory: [MedicineModel] = UserDefaults.standard.value(forKey: "history") as? [MedicineModel] ?? []
     var medicines: MedicineResponse?
-    var favorites: [MedicineModel] = []
-    var history: [MedicineModel] = []
-    var keyword: Keyword = .history
     var object: [MedicineModel] = []
     
     let containerView: UIView = {
@@ -120,10 +115,12 @@ class MainPageViewController: UIViewController {
     }
     
     private func setupUI() {
+        loadUserDefaults()
         setUserCurrent()
         setComponents()
         setConstraint()
         configComponents()
+        self.medicinesTableView.reloadData()
     }
     
     private func setUserCurrent() {
@@ -138,6 +135,18 @@ class MainPageViewController: UIViewController {
         view.backgroundColor = .white
         perfilImageView.layer.cornerRadius = perfilImageView.bounds.height / 2
         perfilImageView.clipsToBounds = true
+        object = userHistory
+    }
+    
+    private func loadUserDefaults() {
+        guard let data = UserDefaults.standard.object(forKey: "favorites") as? Data else {return}
+           if let favorites = try? JSONDecoder().decode([MedicineModel].self, from: data) {
+               userFavorite = favorites
+          }
+        guard let data = UserDefaults.standard.object(forKey: "history") as? Data else {return}
+           if let history = try? JSONDecoder().decode([MedicineModel].self, from: data) {
+               userHistory = history
+          }
     }
     
     private func setComponents() {
@@ -204,7 +213,7 @@ class MainPageViewController: UIViewController {
         historyButton.isActive(true)
         favoriteButton.isActive(false)
         favoriteButton.button.tintColor = .systemGray4
-        object = history
+        object = userHistory
         startLoading()
         medicinesTableView.reloadData()
         Timer.scheduledTimer(withTimeInterval: 0.5, repeats: false) { _ in
@@ -217,7 +226,7 @@ class MainPageViewController: UIViewController {
         favoriteButton.isActive(true)
         favoriteButton.button.tintColor = .systemYellow
         historyButton.isActive(false)
-        object = favorites
+        object = userFavorite
         startLoading()
         medicinesTableView.reloadData()
         Timer.scheduledTimer(withTimeInterval: 0.5, repeats: false) { _ in
@@ -272,7 +281,7 @@ extension MainPageViewController: UITableViewDataSource, UITableViewDelegate {
         let cell = tableView.dequeueReusableCell(withIdentifier: MedicinesTableViewCell.medicinesCell) as! MedicinesTableViewCell
         cell.setCell(medicine: object[indexPath.row].name, laboratory: object[indexPath.row].laboratory)
         cell.isFavorite = false
-        for favorite in self.favorites {
+        for favorite in self.userFavorite {
             if self.object[indexPath.row].name == favorite.name, self.object[indexPath.row].laboratory == favorite.laboratory {
                 cell.isFavorite = true
             }
@@ -280,15 +289,19 @@ extension MainPageViewController: UITableViewDataSource, UITableViewDelegate {
         cell.gestureHandler = {
             if cell.isFavorite == false {
                 var cont = 0
-                for favorite in self.favorites {
+                for favorite in self.userFavorite {
                     if self.object[indexPath.row].name == favorite.name, self.object[indexPath.row].laboratory == favorite.laboratory {
-                        self.favorites.remove(at: cont)
+                        self.userFavorite.remove(at: cont)
+                        UserDefaults.standard.set(self.userFavorite, forKey: "favorites")
                         break
                     }
                     cont += 1
                 }
             } else {
-                self.favorites.append(self.object[indexPath.row])
+                self.userFavorite.append(self.object[indexPath.row])
+                if let favorites = try? JSONEncoder().encode(self.userFavorite) {
+                   UserDefaults.standard.set(favorites, forKey: "favorites")
+                }
             }
         }
         return cell
@@ -296,7 +309,10 @@ extension MainPageViewController: UITableViewDataSource, UITableViewDelegate {
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: true)
-        self.history.append(object[indexPath.row])
+        self.userHistory.append(object[indexPath.row])
+        if let history = try? JSONEncoder().encode(self.userHistory) {
+           UserDefaults.standard.set(history, forKey: "history")
+        }
     }
     
 }
