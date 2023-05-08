@@ -10,9 +10,14 @@ import FirebaseAuth
 import FirebaseFirestore
 
 class MainPageViewController: UIViewController {
+    enum Keyword {
+        case medicines, favorites, history
+    }
+    
     var medicines: MedicineResponse?
     var favorites: [MedicineModel] = []
     var history: [MedicineModel] = []
+    var keyword: Keyword = .history
     
     let containerView: UIView = {
         let view = UIView()
@@ -130,7 +135,8 @@ class MainPageViewController: UIViewController {
     
     private func configComponents() {
         view.backgroundColor = .white
-        perfilImageView.layer.cornerRadius = perfilImageView.frame.height / 2
+        perfilImageView.layer.cornerRadius = perfilImageView.bounds.height / 2
+        perfilImageView.clipsToBounds = true
     }
     
     private func setComponents() {
@@ -193,15 +199,29 @@ class MainPageViewController: UIViewController {
     }
     
     @objc private func historyButtonAction(_: MainSegmentedControl) {
+        searchTextField.text = ""
         historyButton.isActive(true)
         favoriteButton.isActive(false)
         favoriteButton.button.tintColor = .systemGray4
+        keyword = .history
+        startLoading()
+        medicinesTableView.reloadData()
+        Timer.scheduledTimer(withTimeInterval: 0.5, repeats: false) { _ in
+            self.stopLoading()
+        }
     }
     
     @objc private func favoriteButtonAction(_: MainSegmentedControl) {
+        searchTextField.text = ""
         favoriteButton.isActive(true)
         favoriteButton.button.tintColor = .systemYellow
         historyButton.isActive(false)
+        keyword = .favorites
+        startLoading()
+        medicinesTableView.reloadData()
+        Timer.scheduledTimer(withTimeInterval: 0.5, repeats: false) { _ in
+            self.stopLoading()
+        }
     }
     
     private func startLoading() {
@@ -222,6 +242,7 @@ class MainPageViewController: UIViewController {
         ApiManager.shared.fetchData(medicine: search) { response, error in
             if response?.content.count ?? 0 > 0 {
                 self.medicines = response
+                self.keyword = .medicines
                 self.medicinesTableView.reloadData()
             } else {
                 var message: String
@@ -239,18 +260,30 @@ class MainPageViewController: UIViewController {
             self.stopLoading()
         }
     }
+    
+    private func validateObject() -> [MedicineModel] {
+        switch keyword {
+        case .history:
+            return history
+        case .favorites:
+            return favorites
+        case .medicines:
+            return medicines?.content ?? []
+        }
+    }
 }
 
 extension MainPageViewController: UITableViewDataSource, UITableViewDelegate {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return medicines?.content.count ?? 0
+        let object = validateObject()
+        return object.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: MedicinesTableViewCell.medicinesCell) as! MedicinesTableViewCell
-        cell.setCell(medicine: medicines?.content[indexPath.row].name ?? "", laboratory: medicines?.content[indexPath.row].laboratory ?? "")
+        let objects = validateObject()
+        cell.setCell(medicine: objects[indexPath.row].name, laboratory: objects[indexPath.row].laboratory)
         cell.gestureHandler = {
-            guard let medicine = self.medicines?.content[indexPath.row] else {return}
             if cell.favoriteImage.tintColor == .systemYellow {
                 cell.favoriteImage.image = UIImage(systemName: "star")
                 cell.favoriteImage.tintColor = .systemGray3
@@ -265,7 +298,7 @@ extension MainPageViewController: UITableViewDataSource, UITableViewDelegate {
             } else {
                 cell.favoriteImage.image = UIImage(systemName: "star.fill")
                 cell.favoriteImage.tintColor = .systemYellow
-                self.favorites.append(medicine)
+                self.favorites.append(objects[indexPath.row])
             }
         }
         return cell
