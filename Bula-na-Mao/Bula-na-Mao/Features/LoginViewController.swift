@@ -84,6 +84,11 @@ class LoginViewController: UIViewController {
         setupUI()
     }
     
+    override func viewWillDisappear(_ animated: Bool) {
+        emailTextField.text = ""
+        passwordTextField.text = ""
+    }
+    
     private func setupUI() {
         configComponents()
         setComponents()
