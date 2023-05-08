@@ -270,6 +270,12 @@ class MainPageViewController: UIViewController {
             self.stopLoading()
         }
     }
+    
+    private func goToMedicinePage(index: Int) {
+        let controller = MedicinePageViewController()
+        controller.endpoint = object[index].id
+        navigationController?.pushViewController(controller, animated: false)
+    }
 }
 
 extension MainPageViewController: UITableViewDataSource, UITableViewDelegate {
@@ -313,6 +319,7 @@ extension MainPageViewController: UITableViewDataSource, UITableViewDelegate {
         if let history = try? JSONEncoder().encode(self.userHistory) {
            UserDefaults.standard.set(history, forKey: "history")
         }
+        goToMedicinePage(index: indexPath.row)
     }
     
 }
