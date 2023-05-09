@@ -26,6 +26,7 @@ class MedicinePageViewController: UIViewController, WKNavigationDelegate {
     
     override func viewWillAppear(_ animated: Bool) {
         navigationController?.isNavigationBarHidden = false
+        navigationController?.navigationBar.backItem?.title = "Voltar"
     }
     
     private func setupUI() {

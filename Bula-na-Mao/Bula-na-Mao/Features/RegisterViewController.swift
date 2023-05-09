@@ -145,6 +145,7 @@ class RegisterViewController: UIViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         navigationController?.isNavigationBarHidden = false
+        navigationController?.navigationBar.backItem?.title = "Voltar"
     }
     
     override func viewWillDisappear(_ animated: Bool) {
