@@ -41,6 +41,17 @@ class MainPageViewController: UIViewController {
         return label
     }()
     
+    lazy var loggoutButton: UIButton = {
+        let button = UIButton()
+        button.translatesAutoresizingMaskIntoConstraints = false
+        let image = UIImage(systemName: "rectangle.portrait.and.arrow.right.fill")
+        button.setImage(image, for: .normal)
+        button.tintColor = .white
+        button.backgroundColor = .clear
+        button.addTarget(self, action: #selector(loggoutAction(_:)), for: .touchUpInside)
+        return button
+    }()
+    
     lazy var historyButton: MainSegmentedControl = {
         let button = MainSegmentedControl()
         button.translatesAutoresizingMaskIntoConstraints = false
@@ -155,6 +166,7 @@ class MainPageViewController: UIViewController {
         containerView.addSubview(userNameLabel)
         containerView.addSubview(historyButton)
         containerView.addSubview(favoriteButton)
+        containerView.addSubview(loggoutButton)
         view.addSubview(searchTextField)
         view.addSubview(medicinesTableView)
         view.addSubview(loadingView)
@@ -174,7 +186,12 @@ class MainPageViewController: UIViewController {
             
             userNameLabel.topAnchor.constraint(equalTo: perfilImageView.centerYAnchor, constant: -10),
             userNameLabel.leadingAnchor.constraint(equalTo: perfilImageView.trailingAnchor, constant: 15),
-            userNameLabel.trailingAnchor.constraint(equalTo: containerView.trailingAnchor, constant: -20),
+            userNameLabel.trailingAnchor.constraint(equalTo: containerView.trailingAnchor, constant: -50),
+            
+            loggoutButton.topAnchor.constraint(equalTo: containerView.safeAreaLayoutGuide.topAnchor, constant: 20),
+            loggoutButton.leadingAnchor.constraint(equalTo: userNameLabel.trailingAnchor),
+            loggoutButton.trailingAnchor.constraint(equalTo: containerView.trailingAnchor),
+            loggoutButton.heightAnchor.constraint(equalToConstant: 50),
             
             historyButton.topAnchor.constraint(equalTo: perfilImageView.bottomAnchor, constant: 10),
             historyButton.leadingAnchor.constraint(equalTo: containerView.leadingAnchor),
@@ -232,6 +249,10 @@ class MainPageViewController: UIViewController {
         Timer.scheduledTimer(withTimeInterval: 0.5, repeats: false) { _ in
             self.stopLoading()
         }
+    }
+    
+    @objc private func loggoutAction(_: UIButton) {
+        navigationController?.popToRootViewController(animated: true)
     }
     
     private func startLoading() {
