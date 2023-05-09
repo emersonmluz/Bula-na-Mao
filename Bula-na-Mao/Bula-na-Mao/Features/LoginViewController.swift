@@ -187,9 +187,9 @@ class LoginViewController: UIViewController {
     }
     
     private func singIn() {
-        startLoading()
         let auth = UserDefaults.standard.value(forKey: "userLogin")
         if auth != nil, auth as? String != "" {
+            startLoading()
             Timer.scheduledTimer(withTimeInterval: 0.5, repeats: false) { _ in
                 self.authLogin()
             }

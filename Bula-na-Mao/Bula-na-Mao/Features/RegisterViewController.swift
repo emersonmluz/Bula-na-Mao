@@ -269,7 +269,7 @@ class RegisterViewController: UIViewController {
         let name = userNameTextField.text ?? ""
         let email = emailTextField.text ?? ""
         let password = passwordTextField.text ?? ""
-        let photo = perfilImageView.image?.jpegData(compressionQuality: 1)?.base64EncodedString() ?? ""
+        let photo = perfilImageView.image?.jpegData(compressionQuality: 0.5)?.base64EncodedString() ?? ""
         
         loadingView.isHidden = false
         activityLoading.startAnimating()
@@ -359,8 +359,8 @@ extension RegisterViewController: UIImagePickerControllerDelegate, UINavigationC
         }
     }
     
-    private func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String : Any]) {
-        guard let image = info[UIImagePickerController.InfoKey.originalImage.rawValue] as? UIImage else {return}
+    func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
+        guard let image = info[.originalImage] as? UIImage else {return}
         dismiss(animated: true)
         perfilImageView.image = image
     }
