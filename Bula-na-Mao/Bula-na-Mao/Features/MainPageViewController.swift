@@ -252,6 +252,7 @@ class MainPageViewController: UIViewController {
     }
     
     @objc private func loggoutAction(_: UIButton) {
+        FirebaseManager.shared.signOut()
         navigationController?.popToRootViewController(animated: true)
     }
     

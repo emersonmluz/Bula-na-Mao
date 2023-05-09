@@ -23,6 +23,10 @@ class FirebaseManager {
         }
     }
     
+    func signOut() {
+        try? Auth.auth().signOut()
+    }
+    
     func getUserDocument(completion: @escaping(([String: Any]) -> Void)) {
         let _: Void = dataBase.collection("users").whereField("email", isEqualTo: Auth.auth().currentUser?.email ?? "").getDocuments() { (querySnapshot, error) in
             guard error == nil else {return}
