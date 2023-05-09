@@ -9,6 +9,8 @@ import UIKit
 
 class LoginViewController: UIViewController {
     var navigation: UINavigationController?
+    var userLogin: String = UserDefaults.standard.value(forKey: "userLogin") as? String ?? ""
+    var userPassword: String = UserDefaults.standard.value(forKey: "userPassword") as? String ?? ""
     
     lazy var backgroundImage: UIImageView = {
         return setImageView(imageName: "Background")
@@ -84,9 +86,15 @@ class LoginViewController: UIViewController {
         setupUI()
     }
     
-    override func viewWillDisappear(_ animated: Bool) {
+    override func viewDidDisappear(_ animated: Bool) {
         emailTextField.text = ""
         passwordTextField.text = ""
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        guard let email = UserDefaults.standard.value(forKey: "userLogin") as? String, let password = UserDefaults.standard.value(forKey: "userPassword") as? String else {return}
+        emailTextField.text = email
+        passwordTextField.text = password
     }
     
     private func setupUI() {
@@ -195,8 +203,25 @@ class LoginViewController: UIViewController {
                 self?.present(alert, animated: true)
                 return
             }
-            self?.goTo(controller: MainPageViewController())
+            self?.remenberLogin()
         }
+    }
+    
+    private func remenberLogin() {
+        let alert = UIAlertController(title: "Login", message: "Deseja lembrar de seu login para não precisar digitar na próxima vez?", preferredStyle: .alert)
+        let yesAction = UIAlertAction(title: "Sim", style: .default) { _ in
+            UserDefaults.standard.set(self.emailTextField.text, forKey: "userLogin")
+            UserDefaults.standard.set(self.passwordTextField.text, forKey: "userPassword")
+            self.goTo(controller: MainPageViewController())
+        }
+        let notAction = UIAlertAction(title: "Não", style: .cancel) { _ in
+            UserDefaults.standard.set("", forKey: "userLogin")
+            UserDefaults.standard.set("", forKey: "userPassword")
+            self.goTo(controller: MainPageViewController())
+        }
+        alert.addAction(yesAction)
+        alert.addAction(notAction)
+        self.present(alert, animated: true)
     }
     
     private func goTo(controller: UIViewController) {
