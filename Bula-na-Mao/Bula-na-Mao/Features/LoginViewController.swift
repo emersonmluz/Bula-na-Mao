@@ -101,6 +101,7 @@ class LoginViewController: UIViewController {
         configComponents()
         setComponents()
         setConstraints()
+        singIn()
     }
     
     private func configComponents() {
@@ -157,6 +158,29 @@ class LoginViewController: UIViewController {
             registerLabel.trailingAnchor.constraint(equalTo: registerButton.leadingAnchor, constant: -5)
         ])
     }
+    
+    private func singIn() {
+        let auth = UserDefaults.standard.value(forKey: "userLogin")
+        if auth != nil, auth as? String != "" {
+            Timer.scheduledTimer(withTimeInterval: 0.5, repeats: false) { _ in
+                self.authLogin()
+            }
+        }
+    }
+    
+    private func authLogin() {
+        FirebaseManager.shared.authLogin(email: self.emailTextField.text?.lowercased() ?? "", senha: self.passwordTextField.text?.lowercased() ?? "") { [weak self] title, message, actionTitle in
+            guard title == "", message == "", actionTitle == "" else {
+                let alert = UIAlertController(title: title, message: message, preferredStyle: .alert)
+                let action = UIAlertAction(title: actionTitle, style: .default)
+                alert.addAction(action)
+                alert.view.backgroundColor = .white
+                self?.present(alert, animated: true)
+                return
+            }
+            self?.remenberLogin()
+        }
+    }
 
     private func setImageView(imageName: String) -> UIImageView {
         let imageView = UIImageView()
@@ -194,17 +218,7 @@ class LoginViewController: UIViewController {
     }
     
     @objc private func tapLoginButton(_: UIButton) {
-        FirebaseManager.shared.authLogin(email: emailTextField.text?.lowercased() ?? "", senha: passwordTextField.text?.lowercased() ?? "") { [weak self] title, message, actionTitle in
-            guard title == "", message == "", actionTitle == "" else {
-                let alert = UIAlertController(title: title, message: message, preferredStyle: .alert)
-                let action = UIAlertAction(title: actionTitle, style: .default)
-                alert.addAction(action)
-                alert.view.backgroundColor = .white
-                self?.present(alert, animated: true)
-                return
-            }
-            self?.remenberLogin()
-        }
+        authLogin()
     }
     
     private func remenberLogin() {
