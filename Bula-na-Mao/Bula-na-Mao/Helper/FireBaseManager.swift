@@ -17,7 +17,7 @@ class FirebaseManager {
     func authLogin(email: String, senha: String, completion: @escaping((_ title: String, _ message: String, _ actionTitle: String) -> Void)) {
         Auth.auth().signIn(withEmail: email, password: senha) { authResult, error in
             guard error == nil else {
-                completion("Falha", "Verifique se o e-mail digitado e a senha estão corretos ou tente novamente mais tarde.", "Entendi")
+                completion("Falha", "Algo deu errado, tente novamente mais tarde.", "Entendi")
                 return}
             completion("","","")
         }
@@ -36,8 +36,19 @@ class FirebaseManager {
         }
     }
     
-    func saveUserData(name: String, email: String, password: String, photo: String, completion: @escaping((_ titleMessage: String, _ message: String, _ actionTitle: String) -> Void)) {
-
+    func updateUser(name: String, email: String, password: String, photo: String, rememberLogin: Bool = false) {
+        refDoc = dataBase.collection("users").document(name.lowercased())
+        guard let ref = refDoc else {return}
+        ref.setData([
+            "name": name,
+            "email": email.lowercased(),
+            "password": password.lowercased(),
+            "photo": photo,
+            "rememberLogin": rememberLogin
+        ])
+    }
+    
+    func createUser(name: String, email: String, password: String, photo: String, completion: @escaping((_ titleMessage: String, _ message: String, _ actionTitle: String) -> Void)) {
         Auth.auth().createUser(withEmail: email, password: password) { [self] authResult, error in
             guard error == nil else {
                 completion("Falha", "Esse e-mail já está em uso ou o sistema pode estar indisponível.", "Entendi")
@@ -48,7 +59,8 @@ class FirebaseManager {
                 "name": name,
                 "email": email.lowercased(),
                 "password": password.lowercased(),
-                "photo": photo
+                "photo": photo,
+                "rememberLogin": false
             ]) { error in
                 guard error == nil else {
                     completion("Ops!", "Parece que algo deu errado, tente novamente mais tarde.", "Retornar")

@@ -252,6 +252,9 @@ class MainPageViewController: UIViewController {
     }
     
     @objc private func loggoutAction(_: UIButton) {
+        FirebaseManager.shared.getUserDocument() { user in
+            FirebaseManager.shared.updateUser(name: user["name"] as! String, email: user["email"] as! String, password: user["password"] as! String, photo: user["photo"] as! String, rememberLogin: false)
+        }
         FirebaseManager.shared.signOut()
         navigationController?.popToRootViewController(animated: true)
     }

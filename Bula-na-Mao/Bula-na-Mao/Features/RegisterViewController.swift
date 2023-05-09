@@ -274,7 +274,7 @@ class RegisterViewController: UIViewController {
         loadingView.isHidden = false
         activityLoading.startAnimating()
         
-        FirebaseManager.shared.saveUserData(name: name, email: email, password: password, photo: photo) { title, message, actionTitle in
+        FirebaseManager.shared.createUser(name: name, email: email, password: password, photo: photo) { title, message, actionTitle in
             let alert = UIAlertController(title: title, message: message, preferredStyle: .alert)
             let action = UIAlertAction(title: actionTitle, style: .default) {_ in
                 if title == "Sucesso" {

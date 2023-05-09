@@ -208,20 +208,26 @@ class LoginViewController: UIViewController {
     }
     
     private func remenberLogin() {
-        let alert = UIAlertController(title: "Login", message: "Deseja lembrar de seu login para não precisar digitar na próxima vez?", preferredStyle: .alert)
-        let yesAction = UIAlertAction(title: "Sim", style: .default) { _ in
-            UserDefaults.standard.set(self.emailTextField.text, forKey: "userLogin")
-            UserDefaults.standard.set(self.passwordTextField.text, forKey: "userPassword")
-            self.goTo(controller: MainPageViewController())
+        FirebaseManager.shared.getUserDocument() { user in
+            guard !(user["rememberLogin"] as! Bool) else {
+                self.goTo(controller: MainPageViewController())
+                return}
+            let alert = UIAlertController(title: "Login", message: "Deseja lembrar de seu login para não precisar digitar na próxima vez?", preferredStyle: .alert)
+            let yesAction = UIAlertAction(title: "Sim", style: .default) { _ in
+                UserDefaults.standard.set(self.emailTextField.text, forKey: "userLogin")
+                UserDefaults.standard.set(self.passwordTextField.text, forKey: "userPassword")
+                FirebaseManager.shared.updateUser(name: user["name"] as! String, email: user["email"] as! String, password: user["password"] as! String, photo: user["photo"] as! String, rememberLogin: true)
+                self.goTo(controller: MainPageViewController())
+            }
+            let notAction = UIAlertAction(title: "Não", style: .cancel) { _ in
+                UserDefaults.standard.set("", forKey: "userLogin")
+                UserDefaults.standard.set("", forKey: "userPassword")
+                self.goTo(controller: MainPageViewController())
+            }
+            alert.addAction(yesAction)
+            alert.addAction(notAction)
+            self.present(alert, animated: true)
         }
-        let notAction = UIAlertAction(title: "Não", style: .cancel) { _ in
-            UserDefaults.standard.set("", forKey: "userLogin")
-            UserDefaults.standard.set("", forKey: "userPassword")
-            self.goTo(controller: MainPageViewController())
-        }
-        alert.addAction(yesAction)
-        alert.addAction(notAction)
-        self.present(alert, animated: true)
     }
     
     private func goTo(controller: UIViewController) {
