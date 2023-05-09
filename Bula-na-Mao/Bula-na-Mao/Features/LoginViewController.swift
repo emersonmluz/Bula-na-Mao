@@ -68,6 +68,23 @@ class LoginViewController: UIViewController {
         return button
     }()
     
+    var loadingView: UIView = {
+        let view = UIView()
+        view.translatesAutoresizingMaskIntoConstraints = false
+        view.backgroundColor = .black
+        view.layer.opacity = 0.5
+        view.isHidden = true
+        return view
+    }()
+    
+    var spinnerLoading: UIActivityIndicatorView = {
+        let activity = UIActivityIndicatorView()
+        activity.translatesAutoresizingMaskIntoConstraints = false
+        activity.color = .white
+        activity.style = .large
+        return activity
+    }()
+    
     init(navigationController: UINavigationController) {
         self.navigation = navigationController
         super.init(nibName: nil, bundle: nil)
@@ -118,6 +135,8 @@ class LoginViewController: UIViewController {
         view.addSubview(loginButton)
         view.addSubview(registerLabel)
         view.addSubview(registerButton)
+        view.addSubview(loadingView)
+        loadingView.addSubview(spinnerLoading)
     }
     
     private func setConstraints() {
@@ -155,11 +174,20 @@ class LoginViewController: UIViewController {
             registerButton.trailingAnchor.constraint(equalTo: loginButton.trailingAnchor, constant: -2),
             
             registerLabel.topAnchor.constraint(equalTo: loginButton.bottomAnchor, constant: 10),
-            registerLabel.trailingAnchor.constraint(equalTo: registerButton.leadingAnchor, constant: -5)
+            registerLabel.trailingAnchor.constraint(equalTo: registerButton.leadingAnchor, constant: -5),
+            
+            loadingView.topAnchor.constraint(equalTo: view.topAnchor),
+            loadingView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
+            loadingView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
+            loadingView.bottomAnchor.constraint(equalTo: view.bottomAnchor),
+            
+            spinnerLoading.centerYAnchor.constraint(equalTo: loadingView.centerYAnchor),
+            spinnerLoading.centerXAnchor.constraint(equalTo: loadingView.centerXAnchor)
         ])
     }
     
     private func singIn() {
+        startLoading()
         let auth = UserDefaults.standard.value(forKey: "userLogin")
         if auth != nil, auth as? String != "" {
             Timer.scheduledTimer(withTimeInterval: 0.5, repeats: false) { _ in
@@ -218,11 +246,13 @@ class LoginViewController: UIViewController {
     }
     
     @objc private func tapLoginButton(_: UIButton) {
+        startLoading()
         authLogin()
     }
     
     private func remenberLogin() {
         FirebaseManager.shared.getUserDocument() { user in
+            self.stopLoading()
             guard !(user["rememberLogin"] as! Bool) else {
                 self.goTo(controller: MainPageViewController())
                 return}
@@ -246,6 +276,16 @@ class LoginViewController: UIViewController {
     
     private func goTo(controller: UIViewController) {
         navigation?.pushViewController(controller, animated: true)
+    }
+    
+    private func startLoading() {
+        loadingView.isHidden = false
+        spinnerLoading.startAnimating()
+    }
+    
+    private func stopLoading() {
+        loadingView.isHidden = true
+        spinnerLoading.stopAnimating()
     }
 }
 
