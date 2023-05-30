@@ -199,6 +199,7 @@ class LoginViewController: UIViewController {
     private func authLogin() {
         FirebaseManager.shared.authLogin(email: self.emailTextField.text?.lowercased() ?? "", senha: self.passwordTextField.text?.lowercased() ?? "") { [weak self] title, message, actionTitle in
             guard title == "", message == "", actionTitle == "" else {
+                self?.stopLoading()
                 let alert = UIAlertController(title: title, message: message, preferredStyle: .alert)
                 let action = UIAlertAction(title: actionTitle, style: .default)
                 alert.addAction(action)

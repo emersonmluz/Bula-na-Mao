@@ -39,6 +39,7 @@ class MedicinesTableViewCell: UITableViewCell {
     
     override func awakeFromNib() {
         super.awakeFromNib()
+        
     }
     
     private func setupUI() {
